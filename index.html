@@ -3,613 +3,790 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Mi Archivo + Agenda v1.1</title>
+
+<title>Mi Agenda + Mi Archivo</title>
+
 <meta name="theme-color" content="#121212">
+
 <style>
-:root{--bg:#121212;--card:#1e1e1e;--item:#252525;--inp:#2a2a2a;--a:#00e676;--txt:#fff;--sub:#aaa;--bor:#333;--red:#ff5252;--blue:#29b6f6;--yel:#ffd740;--pink:#ff80ab}
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--txt);padding-bottom:78px}
-header{background:var(--card);padding:13px;text-align:center;border-bottom:1px solid var(--bor)}
-h1{font-size:1.2rem;color:var(--a)}
-h2{font-size:1rem;color:var(--a);margin-bottom:10px}
-.container{max-width:650px;margin:auto;padding:10px}
-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);display:flex;border-top:1px solid var(--bor);padding:7px 0;z-index:20}
-nav button{flex:1;background:none;border:0;color:var(--sub);font-size:.68rem;padding:4px 2px}
-nav button.active{color:var(--a);font-weight:bold}
-.tab{display:none}.tab.active{display:block}
-.card{background:var(--card);border:1px solid var(--bor);border-radius:11px;padding:12px;margin-bottom:10px}
-.btn{background:var(--a);color:#000;border:0;border-radius:7px;padding:11px;width:100%;font-weight:bold;cursor:pointer;min-height:42px}
-.out{background:transparent;color:#fff;border:1px solid var(--bor)}
-.sm{width:auto;padding:8px 13px;font-size:.8rem;min-height:38px}
-input,select,textarea{width:100%;background:var(--inp);color:#fff;border:1px solid var(--bor);border-radius:6px;padding:11px;margin:5px 0 10px;font-size:.95rem}
-textarea{min-height:75px}label{font-size:.75rem;color:var(--sub)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.category{background:var(--item);border:1px solid var(--bor);border-radius:10px;padding:15px 10px;text-align:center;cursor:pointer;min-height:95px;display:flex;flex-direction:column;justify-content:center}
-.category .ico{font-size:1.7rem;margin-bottom:7px}.category .name{font-weight:bold;font-size:.85rem}
-.record{background:var(--item);border-left:4px solid var(--a);border-radius:7px;padding:10px;margin-bottom:8px}
-.rtitle{font-weight:bold;font-size:.9rem}.rdata{font-size:.78rem;color:var(--sub);margin-top:5px;white-space:pre-wrap;line-height:1.4}
-.actions{display:flex;gap:7px;margin-top:8px}.actions button{background:#333;color:#fff;border:1px solid var(--bor);border-radius:6px;padding:8px 10px;font-size:.7rem;cursor:pointer;min-height:36px}
-.empty{text-align:center;color:var(--sub);padding:18px;font-size:.8rem}
-.toprow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.toprow h2{margin:0}
-.modal{position:fixed;inset:0;background:#000c;z-index:50;padding:12px;overflow:auto}.modalbox{max-width:600px;margin:20px auto;background:var(--card);border:1px solid var(--bor);border-radius:11px;padding:14px}.modalbox h2{text-align:center;margin-bottom:14px}
-.small{font-size:.72rem;color:var(--sub);line-height:1.5}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}.week{font-size:.65rem;color:var(--sub);padding:5px}
-.cal{height:48px;background:var(--item);border-radius:6px;padding:7px 2px;position:relative;cursor:pointer;font-size:.8rem}.cal.today{border:1px solid var(--a)}.cal.sel{background:var(--a);color:#000;font-weight:bold}
-.dot{position:absolute;bottom:3px;left:0;right:0;font-size:.55rem;white-space:nowrap;overflow:hidden}
-.event{background:var(--item);border-left:4px solid var(--a);border-radius:7px;padding:9px;margin-bottom:7px}.cita{border-color:var(--blue)}.medico{border-color:var(--red)}.viaje{border-color:var(--yel)}.cumple{border-color:var(--pink)}
-.etype{font-size:.65rem;color:var(--sub);text-transform:uppercase}.edate{font-size:.7rem;color:var(--sub)}.etext{font-size:.9rem;margin:3px 0}
-.todaybox{border-left:4px solid var(--a);padding-left:9px;margin-bottom:12px}.bigday{font-size:1.1rem;font-weight:bold}.nextbox{border-left:4px solid var(--blue);padding-left:9px;margin-bottom:10px}.nexttitle{font-size:1rem;font-weight:bold;color:var(--blue);margin-bottom:8px}.nextday{color:var(--a);font-size:.82rem;font-weight:bold;margin:9px 0 5px}.nextitem{background:var(--item);border-radius:7px;padding:9px;margin-bottom:5px;font-size:.82rem}.nexttime{color:var(--sub);font-size:.7rem}.nexttext{margin-top:2px}
-.notice{background:#332900;border:1px solid var(--yel);color:#fff;border-radius:8px;padding:10px;margin-bottom:10px;display:none}.notice strong{color:var(--yel)}
-.formrow{display:flex;gap:8px}.formrow>div{flex:1}.repeatbox{display:flex;align-items:center;gap:8px;padding:8px 0 12px;color:var(--sub);font-size:.75rem}.repeatbox input{width:20px;height:20px;margin:0}
-.sectiontitle{font-size:.72rem;color:var(--sub);text-transform:uppercase;margin:4px 0 8px}
+
+:root{
+--bg:#121212;
+--card:#1e1e1e;
+--item:#252525;
+--inp:#2a2a2a;
+--a:#00e676;
+--txt:#fff;
+--sub:#aaa;
+--bor:#333;
+--red:#ff5252;
+--blue:#29b6f6;
+--yel:#ffd740;
+--pink:#ff80ab
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+-webkit-tap-highlight-color:transparent
+}
+
+body{
+background:var(--bg);
+color:var(--txt);
+padding-bottom:75px
+}
+
+header{
+background:var(--card);
+padding:13px;
+text-align:center;
+border-bottom:1px solid var(--bor)
+}
+
+h1{
+font-size:1.2rem;
+color:var(--a)
+}
+
+h2{
+font-size:1rem;
+color:var(--a);
+margin-bottom:10px
+}
+
+.container{
+max-width:650px;
+margin:auto;
+padding:10px
+}
+
+nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:var(--card);
+display:flex;
+border-top:1px solid var(--bor);
+padding:7px 0;
+z-index:20
+}
+
+nav button{
+width:25%;
+background:none;
+border:0;
+color:var(--sub);
+font-size:.72rem;
+padding:4px
+}
+
+nav button.active{
+color:var(--a);
+font-weight:bold
+}
+
+.tab{
+display:none
+}
+
+.tab.active{
+display:block
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--bor);
+border-radius:11px;
+padding:12px;
+margin-bottom:10px
+}
+
+.btn{
+background:var(--a);
+color:#000;
+border:0;
+border-radius:7px;
+padding:11px;
+width:100%;
+font-weight:bold;
+cursor:pointer;
+min-height:42px
+}
+
+.out{
+background:transparent;
+color:#fff;
+border:1px solid var(--bor)
+}
+
+.sm{
+width:auto;
+padding:8px 13px;
+font-size:.8rem;
+min-height:38px
+}
+
+input,select,textarea{
+width:100%;
+background:var(--inp);
+color:#fff;
+border:1px solid var(--bor);
+border-radius:6px;
+padding:11px;
+margin:5px 0 10px;
+font-size:.95rem
+}
+
+textarea{
+min-height:75px
+}
+
+label{
+font-size:.75rem;
+color:var(--sub)
+}
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:3px;
+text-align:center
+}
+
+.week{
+font-size:.65rem;
+color:var(--sub);
+padding:5px
+}
+
+.cal{
+height:48px;
+background:var(--item);
+border-radius:6px;
+padding:7px 2px;
+position:relative;
+cursor:pointer;
+font-size:.8rem
+}
+
+.cal.today{
+border:1px solid var(--a)
+}
+
+.cal.sel{
+background:var(--a);
+color:#000;
+font-weight:bold
+}
+
+.dot{
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+font-size:.55rem;
+white-space:nowrap;
+overflow:hidden
+}
+
+.event{
+background:var(--item);
+border-left:4px solid var(--a);
+border-radius:7px;
+padding:9px;
+margin-bottom:7px
+}
+
+.cita{
+border-color:var(--blue)
+}
+
+.medico{
+border-color:var(--red)
+}
+
+.viaje{
+border-color:var(--yel)
+}
+
+.cumple{
+border-color:var(--pink)
+}
+
+.etype{
+font-size:.65rem;
+color:var(--sub);
+text-transform:uppercase
+}
+
+.edate{
+font-size:.7rem;
+color:var(--sub)
+}
+
+.etext{
+font-size:.9rem;
+margin:3px 0
+}
+
+.empty{
+text-align:center;
+color:var(--sub);
+padding:18px;
+font-size:.8rem
+}
+
+.actions{
+display:flex;
+gap:7px;
+margin-top:7px
+}
+
+.actions button{
+background:#333;
+color:#fff;
+border:1px solid var(--bor);
+border-radius:6px;
+padding:8px 10px;
+font-size:.7rem;
+cursor:pointer;
+min-height:36px
+}
+
+.todaybox{
+border-left:4px solid var(--a);
+padding-left:9px;
+margin-bottom:12px
+}
+
+.bigday{
+font-size:1.1rem;
+font-weight:bold
+}
+
+.nextbox{
+border-left:4px solid var(--blue);
+padding-left:9px;
+margin-bottom:10px
+}
+
+.nexttitle{
+font-size:1rem;
+font-weight:bold;
+color:var(--blue);
+margin-bottom:8px
+}
+
+.nextday{
+color:var(--a);
+font-size:.82rem;
+font-weight:bold;
+margin:9px 0 5px
+}
+
+.nextitem{
+background:var(--item);
+border-radius:7px;
+padding:9px;
+margin-bottom:5px;
+font-size:.82rem
+}
+
+.nexttime{
+color:var(--sub);
+font-size:.7rem
+}
+
+.nexttext{
+margin-top:2px
+}
+
+.notice{
+background:#332900;
+border:1px solid var(--yel);
+color:#fff;
+border-radius:8px;
+padding:10px;
+margin-bottom:10px;
+display:none
+}
+
+.notice strong{
+color:var(--yel)
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:#000c;
+z-index:50;
+padding:12px;
+overflow:auto
+}
+
+.modalbox{
+max-width:600px;
+margin:20px auto;
+background:var(--card);
+border:1px solid var(--bor);
+border-radius:11px;
+padding:14px
+}
+
+.modalbox h2{
+text-align:center;
+margin-bottom:14px
+}
+
+.formrow{
+display:flex;
+gap:8px
+}
+
+.formrow>div{
+flex:1
+}
+
+.repeatbox{
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px 0 12px;
+color:var(--sub);
+font-size:.75rem
+}
+
+.repeatbox input{
+width:20px;
+height:20px;
+margin:0
+}
+
+/* =========================
+   MI ARCHIVO
+========================= */
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px
+}
+
+.category{
+background:var(--item);
+border:1px solid var(--bor);
+border-radius:10px;
+padding:15px 10px;
+text-align:center;
+cursor:pointer;
+min-height:95px;
+display:flex;
+flex-direction:column;
+justify-content:center
+}
+
+.category .ico{
+font-size:1.7rem;
+margin-bottom:7px
+}
+
+.category .name{
+font-weight:bold;
+font-size:.85rem
+}
+
+.record{
+background:var(--item);
+border-left:4px solid var(--a);
+border-radius:7px;
+padding:10px;
+margin-bottom:8px
+}
+
+.rtitle{
+font-weight:bold;
+font-size:.9rem
+}
+
+.rdata{
+font-size:.78rem;
+color:var(--sub);
+margin-top:5px;
+white-space:pre-wrap;
+line-height:1.4
+}
+
+.toprow{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:8px;
+margin-bottom:10px
+}
+
+.toprow h2{
+margin:0
+}
+
+.small{
+font-size:.72rem;
+color:var(--sub);
+line-height:1.5
+}
+
 </style>
 </head>
+
 <body>
 
-<header><h1>📁 MI ARCHIVO + AGENDA v1.1</h1></header>
+<header>
+<h1>📅 MI AGENDA</h1>
+</header>
 
 <div class="container">
 
-<section id="inicio" class="tab active">
-<div class="card">
-<h2>📁 Mis datos</h2>
-<p class="small">Selecciona un apartado para consultar o añadir datos.</p>
-</div>
-<div class="grid" id="categories"></div>
-<div class="card" style="margin-top:10px">
-<button class="btn out" id="newCategoryBtn">＋ Nuevo apartado</button>
-</div>
-</section>
 
-<section id="lista" class="tab">
-<div class="card">
-<div class="toprow">
-<h2 id="listTitle"></h2>
-<button class="btn out sm" id="backBtn">❮ Volver</button>
-</div>
-<div id="recordList"></div>
-<button class="btn" id="newRecordBtn">＋ Añadir dato</button>
-</div>
-</section>
+<!-- ==================================================
+     MI AGENDA — HOY
+================================================== -->
 
-<section id="hoy" class="tab">
+<section id="hoy" class="tab active">
+
 <div id="notice" class="notice"></div>
 
 <div class="card">
+
 <div class="todaybox">
 <div class="bigday" id="todayTitle"></div>
 </div>
+
 <div id="todayList"></div>
+
 </div>
 
+
 <div class="card">
+
 <div class="nextbox">
-<div class="nexttitle">🔔 PRÓXIMOS AVISOS</div>
+
+<div class="nexttitle">
+🔔 PRÓXIMOS AVISOS
+</div>
+
 <div id="nextList"></div>
-</div>
+
 </div>
 
+</div>
+
+
 <div class="card">
+
 <h2>🔔 Avisos</h2>
-<p id="notificationStatus" style="color:var(--sub);font-size:.75rem;line-height:1.4;margin-bottom:8px">
+
+<p id="notificationStatus"
+style="color:var(--sub);font-size:.75rem;line-height:1.4;margin-bottom:8px">
+
 Activa los avisos para recibir la alerta de las 14:00.
+
 </p>
-<button class="btn out" id="notificationBtn">🔔 Activar avisos</button>
+
+<button class="btn out" id="notificationBtn">
+🔔 Activar avisos
+</button>
+
 </div>
 
+
 <div class="card">
+
 <h2>➕ Añadir</h2>
-<button class="btn" id="newBtn">Nueva anotación</button>
+
+<button class="btn" id="newBtn">
+Nueva anotación
+</button>
+
 </div>
+
 </section>
 
+
+
+<!-- ==================================================
+     MI AGENDA — CALENDARIO
+================================================== -->
+
 <section id="agenda" class="tab">
+
 <div class="card">
+
 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-<button class="btn out sm" id="prev">❮</button>
-<h2 id="monthTitle" style="margin:0;text-align:center;flex:1"></h2>
-<button class="btn out sm" id="next">❯</button>
+
+<button class="btn out sm" id="prev">
+❮
+</button>
+
+<h2 id="monthTitle"
+style="margin:0;text-align:center;flex:1"></h2>
+
+<button class="btn out sm" id="next">
+❯
+</button>
+
 </div>
+
 
 <button class="btn out" id="todayBtn" style="margin:8px 0 10px">
 📅 Ir a hoy
 </button>
 
+
 <div class="calendar" id="calendar"></div>
+
 </div>
 
+
 <div class="card">
+
 <h2 id="dayTitle"></h2>
+
 <div id="dayList"></div>
-<button class="btn" id="dayNew">＋ Añadir a este día</button>
+
+<button class="btn" id="dayNew">
+＋ Añadir a este día
+</button>
+
 </div>
+
 </section>
+
+
+
+<!-- ==================================================
+     MI ARCHIVO — INICIO
+================================================== -->
+
+<section id="archivo" class="tab">
+
+<div class="card">
+
+<h2>📁 Mis datos</h2>
+
+<p class="small">
+Selecciona un apartado para consultar o añadir datos.
+</p>
+
+</div>
+
+
+<div class="grid" id="categories"></div>
+
+
+<div class="card" style="margin-top:10px">
+
+<button class="btn out" id="newCategoryBtn">
+＋ Nuevo apartado
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     MI ARCHIVO — LISTA
+================================================== -->
+
+<section id="lista" class="tab">
+
+<div class="card">
+
+<div class="toprow">
+
+<h2 id="listTitle"></h2>
+
+<button class="btn out sm" id="backBtn">
+❮ Volver
+</button>
+
+</div>
+
+
+<div id="recordList"></div>
+
+
+<button class="btn" id="newRecordBtn">
+＋ Añadir dato
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     AJUSTES
+================================================== -->
 
 <section id="ajustes" class="tab">
 
 <div class="card">
+
 <h2>⚙️ Ajustes</h2>
 
-<div class="sectiontitle">Mi Archivo</div>
-
-<button class="btn out" id="exportArchivo">
-💾 Exportar Mi Archivo
-</button>
-
-<br><br>
-
-<button class="btn out" id="importArchivo">
-📥 Importar Mi Archivo
-</button>
-
-<input id="fileArchivo" type="file" accept=".json" style="display:none">
-
-<br><br>
-
-<div class="sectiontitle">Mi Agenda</div>
 
 <button class="btn out" id="exportAgenda">
-💾 Exportar Agenda
+💾 Exportar agenda
 </button>
 
 <br><br>
 
-<button class="btn out" id="importAgenda">
-📥 Importar Agenda
+
+<button class="btn out" id="importAgendaBtn">
+📥 Importar agenda
 </button>
 
-<input id="fileAgenda" type="file" accept=".json" style="display:none">
+<input
+id="fileAgenda"
+type="file"
+accept=".json"
+style="display:none"
+>
 
 </div>
 
+
 <div class="card">
-<h2>ℹ️ Mi Archivo + Agenda</h2>
+
+<h2>📁 Mi Archivo</h2>
+
+
+<button class="btn out" id="exportArchivo">
+💾 Exportar archivo
+</button>
+
+<br><br>
+
+
+<button class="btn out" id="importArchivoBtn">
+📥 Importar archivo
+</button>
+
+<input
+id="fileArchivo"
+type="file"
+accept=".json"
+style="display:none"
+>
+
+</div>
+
+
+<div class="card">
+
+<h2>ℹ️ Aplicación</h2>
+
 <p class="small">
-Los datos de Mi Archivo y Mi Agenda se guardan automáticamente
-en este dispositivo. Se mantienen separados para evitar que
-una aplicación interfiera con la otra.
+
+Mi Agenda + Mi Archivo.<br><br>
+
+Los datos se guardan automáticamente
+en este dispositivo.
+
 </p>
+
 </div>
 
 </section>
 
-<section id="info" class="tab">
-<div class="card">
-<h2>ℹ️ Estructura</h2>
-
-<p class="small">
-Mi Archivo contiene los apartados personales y Mi Agenda contiene
-citas, cumpleaños, médico y viajes.
-
-<br><br>
-
-Los apartados iniciales de Mi Archivo son:
-
-<br><br>
-
-🚗 Coche<br>
-🏠 Casa<br>
-📱 Telefonía<br>
-🛡️ Seguros<br>
-🏖️ Vacaciones
-
-<br><br>
-
-Puedes crear nuevos apartados y añadir, modificar o borrar datos.
-</p>
 
 </div>
-</section>
 
-</div>
+
+
+<!-- ==================================================
+     NAVEGACION
+================================================== -->
 
 <nav>
-<button id="navInicio" class="active">📁<br>Archivo</button>
-<button id="navHoy">🏠<br>Hoy</button>
-<button id="navAgenda">📅<br>Agenda</button>
-<button id="navAjustes">⚙️<br>Ajustes</button>
-<button id="navInfo">ℹ️<br>Info</button>
+
+<button id="navHoy" class="active">
+🏠<br>Hoy
+</button>
+
+<button id="navAgenda">
+📅<br>Agenda
+</button>
+
+<button id="navArchivo">
+📁<br>Archivo
+</button>
+
+<button id="navAjustes">
+⚙️<br>Ajustes
+</button>
+
 </nav>
 
+
+
 <script>
+
 "use strict";
 
-/* =====================================================
-   MI ARCHIVO
-===================================================== */
 
-const ARCHIVE_KEY="mi_archivo_v1";
-
-const DEFAULT_CATEGORIES=[
-{id:"coche",name:"Coche",icon:"🚗"},
-{id:"casa",name:"Casa",icon:"🏠"},
-{id:"telefonia",name:"Telefonía",icon:"📱"},
-{id:"seguros",name:"Seguros",icon:"🛡️"},
-{id:"vacaciones",name:"Vacaciones",icon:"🏖️"}
-];
-
-let archiveData;
-
-try{
-archiveData=JSON.parse(
-localStorage.getItem(ARCHIVE_KEY)||"null"
-);
-}catch(e){
-archiveData=null;
-}
-
-if(
-!archiveData||
-!Array.isArray(archiveData.categories)||
-!Array.isArray(archiveData.records)
-){
-archiveData={
-categories:DEFAULT_CATEGORIES.map(x=>({...x})),
-records:[]
-};
-saveArchive();
-}
-
-let currentCategory=null;
-let editRecordId=null;
+/* ==================================================
+   FUNCIONES GENERALES
+================================================== */
 
 const $=id=>document.getElementById(id);
 
-function saveArchive(){
-localStorage.setItem(
-ARCHIVE_KEY,
-JSON.stringify(archiveData)
-);
-}
 
-function esc(s){
-return String(s??"").replace(
-/[&<>"']/g,
-m=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[m])
-);
-}
-
-function categoryById(id){
-return archiveData.categories.find(
-c=>c.id===id
-);
-}
-
-function renderCategories(){
-
-$("categories").innerHTML=
-archiveData.categories.map(c=>`
-<div class="category" data-cat="${esc(c.id)}">
-<div class="ico">${esc(c.icon)}</div>
-<div class="name">${esc(c.name)}</div>
-</div>
-`).join("");
-
-document
-.querySelectorAll(".category")
-.forEach(el=>{
-el.onclick=()=>{
-currentCategory=el.dataset.cat;
-renderRecords();
-showTab("lista");
-};
-});
-}
-
-function renderRecords(){
-
-const c=categoryById(currentCategory);
-
-if(!c){
-showTab("inicio");
-return;
-}
-
-$("listTitle").textContent=
-(c.icon||"📁")+" "+c.name;
-
-const list=
-archiveData.records
-.filter(r=>r.category===currentCategory)
-.sort((a,b)=>
-String(a.title).localeCompare(
-String(b.title),
-"es"
-)
+const esc=s=>String(s??"").replace(
+ /[&<>"']/g,
+ m=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[m])
 );
 
-$("recordList").innerHTML=
-list.length?
 
-list.map(r=>`
-<div class="record">
 
-<div class="rtitle">
-${esc(r.title)}
-</div>
-
-${r.details?
-`<div class="rdata">${esc(r.details)}</div>`:
-""}
-
-<div class="actions">
-
-<button
-class="editRecordBtn"
-data-id="${esc(r.id)}"
->
-✏️ Editar
-</button>
-
-<button
-class="deleteRecordBtn"
-data-id="${esc(r.id)}"
->
-🗑️ Borrar
-</button>
-
-</div>
-
-</div>
-`).join("")
-
-:
-
-`<div class="empty">
-No hay datos en este apartado.
-</div>`;
-}
-
-$("backBtn").onclick=()=>{
-currentCategory=null;
-renderCategories();
-showTab("inicio");
-};
-
-$("newRecordBtn").onclick=()=>{
-if(currentCategory)
-openRecordForm(currentCategory,null);
-};
-
-document.addEventListener("click",e=>{
-
-const b=e.target.closest(
-".editRecordBtn,.deleteRecordBtn"
-);
-
-if(!b)return;
-
-const id=b.dataset.id;
-
-const r=archiveData.records.find(
-x=>String(x.id)===String(id)
-);
-
-if(!r)return;
-
-if(b.classList.contains("editRecordBtn")){
-openRecordForm(r.category,r);
-return;
-}
-
-if(
-b.classList.contains("deleteRecordBtn")&&
-confirm("¿Borrar este dato?")
-){
-
-archiveData.records=
-archiveData.records.filter(
-x=>String(x.id)!==String(id)
-);
-
-saveArchive();
-renderRecords();
-}
-
-});
-
-function openRecordForm(categoryId,r){
-
-editRecordId=r?r.id:null;
-
-const m=document.createElement("div");
-
-m.className="modal";
-
-m.innerHTML=`
-
-<div class="modalbox">
-
-<h2>
-${editRecordId?"✏️ Editar dato":"➕ Nuevo dato"}
-</h2>
-
-<label>
-Nombre / concepto
-</label>
-
-<input
-id="rt"
-placeholder="Ej.: ITV, seguro, recibo..."
-value="${esc(r?.title||"")}"
->
-
-<label>
-Datos
-</label>
-
-<textarea
-id="rd"
-placeholder="Escribe aquí los datos que quieras guardar..."
->${esc(r?.details||"")}</textarea>
-
-<div style="display:flex;gap:7px">
-
-<button class="btn" id="rs">
-Guardar
-</button>
-
-<button class="btn out" id="rc">
-Cancelar
-</button>
-
-</div>
-
-</div>
-`;
-
-document.body.appendChild(m);
-
-$("rc").onclick=()=>m.remove();
-
-$("rs").onclick=()=>{
-
-const title=$("rt").value.trim();
-
-if(!title){
-alert("Escribe un nombre o concepto.");
-$("rt").focus();
-return;
-}
-
-const x={
-id:editRecordId||Date.now(),
-category:categoryId,
-title:title,
-details:$("rd").value.trim()
-};
-
-if(editRecordId){
-
-archiveData.records=
-archiveData.records.map(a=>
-String(a.id)===String(editRecordId)?x:a
-);
-
-}else{
-
-archiveData.records.push(x);
-
-}
-
-saveArchive();
-
-m.remove();
-renderRecords();
-
-};
-}
-
-/* NUEVO APARTADO */
-
-$("newCategoryBtn").onclick=()=>{
-
-const m=document.createElement("div");
-
-m.className="modal";
-
-m.innerHTML=`
-
-<div class="modalbox">
-
-<h2>
-➕ Nuevo apartado
-</h2>
-
-<label>
-Nombre
-</label>
-
-<input
-id="cn"
-placeholder="Ej.: Mascotas, Ocio, Trámites..."
->
-
-<label>
-Icono
-</label>
-
-<input
-id="ci"
-placeholder="📁"
-value="📁"
->
-
-<div style="display:flex;gap:7px">
-
-<button class="btn" id="cs">
-Guardar
-</button>
-
-<button class="btn out" id="cc">
-Cancelar
-</button>
-
-</div>
-
-</div>
-`;
-
-document.body.appendChild(m);
-
-$("cc").onclick=()=>m.remove();
-
-$("cs").onclick=()=>{
-
-const name=$("cn").value.trim();
-const icon=$("ci").value.trim()||"📁";
-
-if(!name){
-alert("Escribe el nombre del apartado.");
-$("cn").focus();
-return;
-}
-
-archiveData.categories.push({
-id:"cat_"+Date.now(),
-name:name,
-icon:icon
-});
-
-saveArchive();
-m.remove();
-renderCategories();
-};
-
-};
-
-/* =====================================================
+/* ==================================================
    MI AGENDA
-===================================================== */
+================================================== */
 
 const AGENDA_KEY="mi_agenda_v5";
 
 let events=[];
 
+
 try{
+
 events=JSON.parse(
 localStorage.getItem(AGENDA_KEY)||"[]"
 );
+
 }catch(e){
+
 events=[];
+
 }
+
 
 let view=new Date();
 let selected=today();
-let editEventId=null;
+let editId=null;
 
-function saveAgenda(){
-localStorage.setItem(
-AGENDA_KEY,
-JSON.stringify(events)
-);
-}
 
 function today(){
 
@@ -618,26 +795,36 @@ let d=new Date();
 return d.getFullYear()+"-"+
 String(d.getMonth()+1).padStart(2,"0")+"-"+
 String(d.getDate()).padStart(2,"0");
+
 }
+
 
 function addDays(dateString,days){
 
-let d=new Date(
-dateString+"T12:00:00"
-);
+let d=new Date(dateString+"T12:00:00");
 
 d.setDate(d.getDate()+days);
 
 return d.getFullYear()+"-"+
 String(d.getMonth()+1).padStart(2,"0")+"-"+
 String(d.getDate()).padStart(2,"0");
+
 }
+
+
+function saveAgenda(){
+
+localStorage.setItem(
+AGENDA_KEY,
+JSON.stringify(events)
+);
+
+}
+
 
 function fmt(s){
 
-return new Date(
-s+"T12:00:00"
-).toLocaleDateString(
+return new Date(s+"T12:00:00").toLocaleDateString(
 "es-ES",
 {
 day:"2-digit",
@@ -645,7 +832,9 @@ month:"2-digit",
 year:"numeric"
 }
 );
+
 }
+
 
 const names={
 cita:"🔵 Cita",
@@ -654,26 +843,112 @@ medico:"🩺 Médico",
 viaje:"✈️ Viaje"
 };
 
+
+function showTab(n){
+
+[
+"hoy",
+"agenda",
+"archivo",
+"lista",
+"ajustes"
+].forEach(x=>
+$(x).classList.toggle(
+"active",
+x===n
+)
+);
+
+
+[
+"navHoy",
+"navAgenda",
+"navArchivo",
+"navAjustes"
+].forEach((x,i)=>
+$(x).classList.toggle(
+"active",
+[
+"hoy",
+"agenda",
+"archivo",
+"ajustes"
+][i]===n
+)
+);
+
+
+if(n==="hoy"){
+
+renderToday();
+renderNext();
+
+}
+
+
+if(n==="agenda"){
+
+renderCalendar();
+
+}
+
+
+if(n==="archivo"){
+
+currentCategory=null;
+renderCategories();
+
+}
+
+}
+
+
+$("navHoy").onclick=()=>{
+showTab("hoy");
+};
+
+
+$("navAgenda").onclick=()=>{
+showTab("agenda");
+};
+
+
+$("navArchivo").onclick=()=>{
+showTab("archivo");
+};
+
+
+$("navAjustes").onclick=()=>{
+showTab("ajustes");
+};
+
+
+
+/* ==================================================
+   EVENTOS
+================================================== */
+
 function allEvents(){
 
 let a=[...events];
 
 let y=new Date().getFullYear();
 
+
 events
 .filter(e=>e.repeat&&e.type==="cumple")
 .forEach(e=>{
 
 let originalYear=
-new Date(
-e.date+"T12:00:00"
-).getFullYear();
+new Date(e.date+"T12:00:00").getFullYear();
+
 
 for(let i=-2;i<5;i++){
 
 let yy=y+i;
 
 if(yy===originalYear)continue;
+
 
 a.push({
 ...e,
@@ -682,10 +957,14 @@ date:yy+"-"+e.date.slice(5)
 });
 
 }
+
 });
 
+
 return a;
+
 }
+
 
 function icon(type){
 
@@ -693,58 +972,58 @@ return type==="cita"?"🔵":
 type==="cumple"?"🎂":
 type==="medico"?"🩺":
 "✈️";
+
 }
+
 
 function card(e){
 
-return `
-<div class="event ${e.type}" data-id="${esc(e.id)}">
+return '<div class="event '+e.type+'" data-id="'+esc(e.id)+'">'+
 
-<div class="etype">
-${names[e.type]}
-${e.repeat?" · ANUAL":""}
-</div>
+'<div class="etype">'+
+names[e.type]+
+(e.repeat?" · ANUAL":"")+
+'</div>'+
 
-<div class="edate">
-${e.time?e.time+" · ":""}
-${fmt(e.date)}
-</div>
+'<div class="edate">'+
+(e.time?e.time+" · ":"")+
+fmt(e.date)+
+'</div>'+
 
-<div class="etext">
-${esc(e.text)}
-</div>
+'<div class="etext">'+
+esc(e.text)+
+'</div>'+
 
-${e.note?
-`<div style="font-size:.72rem;color:var(--sub)">
-${esc(e.note)}
-</div>`:
-""}
+(e.note?
+'<div style="font-size:.72rem;color:var(--sub)">'+
+esc(e.note)+
+'</div>':
+'')+
 
-<div class="actions">
+'<div class="actions">'+
 
-<button
-class="editEventBtn"
-data-id="${esc(e.id)}"
->
-✏️ Editar
-</button>
+'<button class="editBtn" data-id="'+esc(e.id)+'">'+
+'✏️ Editar'+
+'</button>'+
 
-<button
-class="deleteEventBtn"
-data-id="${esc(e.id)}"
->
-🗑️ Borrar
-</button>
+'<button class="deleteBtn" data-id="'+esc(e.id)+'">'+
+'🗑️ Borrar'+
+'</button>'+
 
-</div>
+'</div></div>';
 
-</div>
-`;
 }
+
+
+
+/* ==================================================
+   HOY
+================================================== */
 
 function renderToday(){
 
 let d=new Date();
+
 
 $("todayTitle").textContent=
 d.toLocaleDateString(
@@ -756,25 +1035,38 @@ month:"long"
 }
 );
 
+
 let a=allEvents()
 .filter(e=>e.date===today())
 .sort((a,b)=>
 (a.time||"").localeCompare(b.time||"")
 );
 
-$("todayList").innerHTML=
-a.length?
+
+$("todayList").innerHTML=a.length?
 a.map(card).join(""):
-'<div class="empty">No tienes nada previsto para hoy. 👍</div>';
+'<div class="empty">'+
+'No tienes nada previsto para hoy. 👍'+
+'</div>';
+
 
 updateNotificationStatus();
+
 }
+
+
+
+/* ==================================================
+   PROXIMOS AVISOS
+================================================== */
 
 function renderNext(){
 
 let t=today();
+
 let manana=addDays(t,1);
 let pasado=addDays(t,2);
+
 
 let a=allEvents()
 .filter(e=>
@@ -787,15 +1079,21 @@ y.date+(y.time||"")
 )
 );
 
+
 if(!a.length){
 
 $("nextList").innerHTML=
-'<div class="empty">No hay avisos para mañana ni pasado mañana. 👍</div>';
+'<div class="empty">'+
+'No hay avisos para mañana ni pasado mañana. 👍'+
+'</div>';
 
 return;
+
 }
 
+
 let html="";
+
 
 [manana,pasado].forEach((fecha,i)=>{
 
@@ -803,9 +1101,9 @@ let lista=a.filter(e=>e.date===fecha);
 
 if(!lista.length)return;
 
-let d=new Date(
-fecha+"T12:00:00"
-);
+
+let d=new Date(fecha+"T12:00:00");
+
 
 let titulo=
 (i===0?"MAÑANA":"PASADO MAÑANA")+
@@ -819,35 +1117,49 @@ month:"long"
 }
 );
 
+
 html+=
 '<div class="nextday">'+
 titulo+
 '</div>';
 
+
 lista.forEach(e=>{
 
 html+=
 '<div class="nextitem">'+
+
 '<div>'+
 names[e.type]+
 (e.repeat?" · ANUAL":"")+
 '</div>'+
+
 '<div class="nexttext">'+
 esc(e.text)+
 '</div>'+
+
 (e.time?
 '<div class="nexttime">⏰ '+
 esc(e.time)+
 '</div>':
-"")+
+'')+
+
 '</div>';
 
 });
 
 });
 
+
 $("nextList").innerHTML=html;
+
 }
+
+
+
+/* ==================================================
+   CALENDARIO
+================================================== */
 
 function renderCalendar(){
 
@@ -862,6 +1174,7 @@ new Date(y,m+1,0).getDate();
 
 let a=allEvents();
 
+
 $("monthTitle").textContent=
 view.toLocaleDateString(
 "es-ES",
@@ -871,14 +1184,21 @@ year:"numeric"
 }
 );
 
+
 let h=
 ["Lu","Ma","Mi","Ju","Vi","Sá","Do"]
-.map(x=>'<div class="week">'+x+'</div>')
+.map(x=>
+'<div class="week">'+x+'</div>'
+)
 .join("");
 
+
 for(let i=0;i<first;i++){
+
 h+="<div></div>";
+
 }
+
 
 for(let d=1;d<=days;d++){
 
@@ -887,13 +1207,16 @@ y+"-"+
 String(m+1).padStart(2,"0")+"-"+
 String(d).padStart(2,"0");
 
+
 let es=a.filter(e=>e.date===z);
+
 
 let dots=es.length?
 '<div class="dot">'+
 es.map(e=>icon(e.type)).join("")+
 '</div>':
 "";
+
 
 h+=
 '<div class="cal '+
@@ -903,27 +1226,38 @@ h+=
 d+
 dots+
 '</div>';
+
 }
 
+
 $("calendar").innerHTML=h;
+
 
 document
 .querySelectorAll(".cal[data-date]")
 .forEach(x=>
+
 x.onclick=()=>{
+
 selected=x.dataset.date;
+
 renderCalendar();
+
 }
+
 );
 
+
 renderDay();
+
 }
+
+
 
 function renderDay(){
 
-let d=new Date(
-selected+"T12:00:00"
-);
+let d=new Date(selected+"T12:00:00");
+
 
 $("dayTitle").textContent=
 d.toLocaleDateString(
@@ -936,31 +1270,148 @@ year:"numeric"
 }
 );
 
+
 let a=allEvents()
 .filter(e=>e.date===selected)
 .sort((a,b)=>
 (a.time||"").localeCompare(b.time||"")
 );
 
-$("dayList").innerHTML=
-a.length?
+
+$("dayList").innerHTML=a.length?
 a.map(card).join(""):
-'<div class="empty">No hay anotaciones para este día.</div>';
+'<div class="empty">'+
+'No hay anotaciones para este día.'+
+'</div>';
+
 }
 
-function openEventForm(date,e){
 
-editEventId=e?e.id:null;
+
+/* ==================================================
+   BOTONES AGENDA
+================================================== */
+
+$("prev").onclick=()=>{
+
+view.setMonth(view.getMonth()-1);
+
+renderCalendar();
+
+};
+
+
+$("next").onclick=()=>{
+
+view.setMonth(view.getMonth()+1);
+
+renderCalendar();
+
+};
+
+
+$("todayBtn").onclick=()=>{
+
+selected=today();
+
+view=new Date();
+
+renderCalendar();
+
+};
+
+
+$("newBtn").onclick=()=>
+openAgendaForm(today(),null);
+
+
+$("dayNew").onclick=()=>
+openAgendaForm(selected,null);
+
+
+
+/* ==================================================
+   EDITAR / BORRAR AGENDA
+================================================== */
+
+document.addEventListener("click",function(e){
+
+let b=e.target.closest(
+".editBtn,.deleteBtn"
+);
+
+if(!b)return;
+
+
+let id=b.getAttribute("data-id");
+
+
+let x=events.find(a=>
+String(a.id)===String(id)
+);
+
+
+if(!x){
+
+alert(
+"Este es un cumpleaños anual.\n"+
+"Debes modificar el cumpleaños original."
+);
+
+return;
+
+}
+
+
+if(b.classList.contains("editBtn")){
+
+openAgendaForm(x.date,x);
+
+return;
+
+}
+
+
+if(
+b.classList.contains("deleteBtn")&&
+confirm("¿Borrar esta anotación?")
+){
+
+events=events.filter(a=>
+String(a.id)!==String(id)
+);
+
+saveAgenda();
+
+renderToday();
+renderNext();
+renderCalendar();
+
+}
+
+});
+
+
+
+/* ==================================================
+   FORMULARIO AGENDA
+================================================== */
+
+function openAgendaForm(date,e){
+
+editId=e?e.id:null;
+
 
 let m=document.createElement("div");
 
 m.className="modal";
 
+
 m.innerHTML=
 '<div class="modalbox">'+
 
 '<h2>'+
-(editEventId?
+(editId?
 "✏️ Editar anotación":
 "➕ Nueva anotación")+
 '</h2>'+
@@ -968,10 +1419,12 @@ m.innerHTML=
 '<label>Tipo</label>'+
 
 '<select id="ft">'+
+
 '<option value="cita">🔵 Cita</option>'+
 '<option value="cumple">🎂 Cumpleaños</option>'+
 '<option value="medico">🩺 Médico</option>'+
 '<option value="viaje">✈️ Viaje</option>'+
+
 '</select>'+
 
 '<div class="formrow">'+
@@ -992,14 +1445,13 @@ m.innerHTML=
 
 '<label>Descripción</label>'+
 
-'<input id="fx" '+
-'placeholder="¿Qué tienes previsto?" '+
-'value="'+esc(e&&e.text||"")+'">'+
+'<input id="fx" placeholder="¿Qué tienes previsto?" value="'+
+esc(e&&e.text||"")+
+'">'+
 
 '<label>Notas</label>'+
 
-'<textarea id="fn" '+
-'placeholder="Detalles...">'+
+'<textarea id="fn" placeholder="Detalles...">'+
 esc(e&&e.note||"")+
 '</textarea>'+
 
@@ -1008,6 +1460,7 @@ esc(e&&e.note||"")+
 '<input id="fr" type="checkbox" '+
 (e&&e.repeat?"checked":"")+
 '>'+
+
 ' Repetir cada año</label>'+
 
 '<div style="display:flex;gap:7px">'+
@@ -1020,56 +1473,87 @@ esc(e&&e.note||"")+
 
 '</div>';
 
+
 document.body.appendChild(m);
+
 
 $("ft").value=e&&e.type||"cita";
 
+
 function rep(){
+
 $("rl").style.display=
 $("ft").value==="cumple"?
 "flex":
 "none";
+
 }
+
 
 $("ft").onchange=rep;
 
 rep();
 
-$("fc").onclick=()=>m.remove();
+
+$("fc").onclick=()=>
+m.remove();
+
 
 $("fs").onclick=()=>{
 
 let text=$("fx").value.trim();
-let fecha=$("fd").value;
+
 
 if(!text){
+
 alert("Escribe una descripción.");
+
 $("fx").focus();
+
 return;
+
 }
+
+
+let fecha=$("fd").value;
+
 
 if(!fecha){
+
 alert("Selecciona una fecha.");
+
 $("fd").focus();
+
 return;
+
 }
 
+
 let x={
-id:editEventId||Date.now(),
+
+id:editId||Date.now(),
+
 type:$("ft").value,
+
 date:fecha,
+
 time:$("fh").value,
+
 text:text,
+
 note:$("fn").value.trim(),
+
 repeat:
 $("ft").value==="cumple"&&
 $("fr").checked
+
 };
 
-if(editEventId){
+
+if(editId){
 
 events=events.map(a=>
-String(a.id)===String(editEventId)?
+String(a.id)===String(editId)?
 x:
 a
 );
@@ -1080,7 +1564,9 @@ events.push(x);
 
 }
 
+
 saveAgenda();
+
 
 selected=x.date;
 
@@ -1088,380 +1574,55 @@ view=new Date(
 x.date+"T12:00:00"
 );
 
+
 m.remove();
+
 
 renderToday();
 renderNext();
 renderCalendar();
 
 checkAlerts();
+
 };
-}
-
-$("newBtn").onclick=()=>
-openEventForm(today(),null);
-
-$("dayNew").onclick=()=>
-openEventForm(selected,null);
-
-$("prev").onclick=()=>{
-view.setMonth(view.getMonth()-1);
-renderCalendar();
-};
-
-$("next").onclick=()=>{
-view.setMonth(view.getMonth()+1);
-renderCalendar();
-};
-
-$("todayBtn").onclick=()=>{
-selected=today();
-view=new Date();
-renderCalendar();
-};
-
-document.addEventListener("click",e=>{
-
-const b=e.target.closest(
-".editEventBtn,.deleteEventBtn"
-);
-
-if(!b)return;
-
-const id=b.dataset.id;
-
-const x=events.find(
-a=>String(a.id)===String(id)
-);
-
-if(!x){
-
-alert(
-"Este es un cumpleaños anual.\n"+
-"Debes modificar el cumpleaños original."
-);
-
-return;
-}
-
-if(b.classList.contains("editEventBtn")){
-
-openEventForm(x.date,x);
-return;
-}
-
-if(
-b.classList.contains("deleteEventBtn")&&
-confirm("¿Borrar esta anotación?")
-){
-
-events=events.filter(
-a=>String(a.id)!==String(id)
-);
-
-saveAgenda();
-
-renderToday();
-renderNext();
-renderCalendar();
-}
-
-});
-
-/* =====================================================
-   NAVEGACION
-===================================================== */
-
-function showTab(n){
-
-[
-"inicio",
-"lista",
-"hoy",
-"agenda",
-"ajustes",
-"info"
-].forEach(x=>
-$(x).classList.toggle(
-"active",
-x===n
-)
-);
-
-[
-"navInicio",
-"navHoy",
-"navAgenda",
-"navAjustes",
-"navInfo"
-].forEach((x,i)=>
-$(x).classList.toggle(
-"active",
-[
-"inicio",
-"hoy",
-"agenda",
-"ajustes",
-"info"
-][i]===n
-)
-);
-
-if(n==="inicio")
-renderCategories();
-
-if(n==="hoy"){
-renderToday();
-renderNext();
-}
-
-if(n==="agenda")
-renderCalendar();
-}
-
-$("navInicio").onclick=()=>{
-currentCategory=null;
-showTab("inicio");
-};
-
-$("navHoy").onclick=()=>
-showTab("hoy");
-
-$("navAgenda").onclick=()=>
-showTab("agenda");
-
-$("navAjustes").onclick=()=>
-showTab("ajustes");
-
-$("navInfo").onclick=()=>
-showTab("info");
-
-/* =====================================================
-   EXPORTAR / IMPORTAR ARCHIVO
-===================================================== */
-
-$("exportArchivo").onclick=()=>{
-
-let blob=new Blob(
-[
-JSON.stringify(
-{
-version:1,
-categories:archiveData.categories,
-records:archiveData.records
-},
-null,
-2
-)
-],
-{type:"application/json"}
-);
-
-let a=document.createElement("a");
-
-a.href=URL.createObjectURL(blob);
-
-a.download=
-"mi_archivo_"+today()+".json";
-
-a.click();
-
-setTimeout(
-()=>URL.revokeObjectURL(a.href),
-1000
-);
-};
-
-$("importArchivo").onclick=()=>{
-
-if(
-!archiveData.records.length||
-confirm(
-"⚠️ IMPORTAR MI ARCHIVO\n\n"+
-"La importación sustituirá los datos actuales "+
-"de Mi Archivo.\n\n"+
-"¿Quieres continuar?"
-)
-)
-$("fileArchivo").click();
-};
-
-$("fileArchivo").onchange=e=>{
-
-let f=e.target.files[0];
-
-if(!f)return;
-
-let r=new FileReader();
-
-r.onload=()=>{
-
-try{
-
-let d=JSON.parse(r.result);
-
-if(
-!Array.isArray(d.categories)||
-!Array.isArray(d.records)
-)
-throw 0;
-
-archiveData={
-categories:d.categories,
-records:d.records
-};
-
-saveArchive();
-
-currentCategory=null;
-
-renderCategories();
-
-showTab("inicio");
-
-alert(
-"Archivo importado correctamente."
-);
-
-}catch(x){
-
-alert("Archivo no válido.");
 
 }
 
-e.target.value="";
 
-};
 
-r.readAsText(f);
-};
-
-/* =====================================================
-   EXPORTAR / IMPORTAR AGENDA
-===================================================== */
-
-$("exportAgenda").onclick=()=>{
-
-let blob=new Blob(
-[
-JSON.stringify(
-{
-version:5,
-events:events
-},
-null,
-2
-)
-],
-{type:"application/json"}
-);
-
-let a=document.createElement("a");
-
-a.href=URL.createObjectURL(blob);
-
-a.download=
-"mi_agenda_"+today()+".json";
-
-a.click();
-
-setTimeout(
-()=>URL.revokeObjectURL(a.href),
-1000
-);
-};
-
-$("importAgenda").onclick=()=>{
-
-if(
-!events.length||
-confirm(
-"⚠️ IMPORTAR AGENDA\n\n"+
-"La importación sustituirá los datos actuales "+
-"de Mi Agenda.\n\n"+
-"¿Quieres continuar?"
-)
-)
-$("fileAgenda").click();
-};
-
-$("fileAgenda").onchange=e=>{
-
-let f=e.target.files[0];
-
-if(!f)return;
-
-let r=new FileReader();
-
-r.onload=()=>{
-
-try{
-
-let d=JSON.parse(r.result);
-
-if(!Array.isArray(d.events))
-throw 0;
-
-events=d.events;
-
-saveAgenda();
-
-selected=today();
-
-view=new Date();
-
-renderToday();
-renderNext();
-renderCalendar();
-
-alert(
-"Agenda importada correctamente."
-);
-
-}catch(x){
-
-alert("Archivo no válido.");
-
-}
-
-e.target.value="";
-
-};
-
-r.readAsText(f);
-};
-
-/* =====================================================
+/* ==================================================
    AVISOS
-===================================================== */
+================================================== */
 
 function alertKey(){
+
 return "agenda_aviso_"+today();
+
 }
+
 
 function tomorrowEvents(){
 
-let manana=addDays(
-today(),
-1
-);
+let manana=addDays(today(),1);
 
 return allEvents()
 .filter(e=>e.date===manana)
 .sort((a,b)=>
-(a.time||"").localeCompare(
-b.time||""
-)
+(a.time||"").localeCompare(b.time||"")
 );
+
 }
+
 
 function showAlertMessage(lista){
 
 if(!lista.length)return;
 
+
 let texto=
 "🔔 AVISO\n\n"+
 "Mañana tienes:\n\n";
+
 
 lista.forEach(e=>{
 
@@ -1474,9 +1635,11 @@ e.text+
 
 });
 
+
 $("notice").innerHTML=
 "<strong>🔔 AVISO</strong><br><br>"+
 "Mañana tienes:<br>"+
+
 lista.map(e=>
 (e.time?
 "⏰ "+esc(e.time)+" — ":
@@ -1484,10 +1647,14 @@ lista.map(e=>
 esc(e.text)
 ).join("<br>");
 
+
 $("notice").style.display="block";
 
+
 alert(texto);
+
 }
+
 
 function playAlertSound(){
 
@@ -1499,13 +1666,16 @@ window.webkitAudioContext;
 
 if(!AudioContext)return;
 
+
 let ctx=new AudioContext();
 let now=ctx.currentTime;
+
 
 for(let i=0;i<3;i++){
 
 let osc=ctx.createOscillator();
 let gain=ctx.createGain();
+
 
 osc.type="sine";
 
@@ -1516,23 +1686,29 @@ i===1?
 1100:
 880;
 
+
 gain.gain.setValueAtTime(
 .0001,
 now+i*.35
 );
+
 
 gain.gain.exponentialRampToValueAtTime(
 .35,
 now+i*.35+.03
 );
 
+
 gain.gain.exponentialRampToValueAtTime(
 .0001,
 now+i*.35+.28
 );
 
+
 osc.connect(gain);
+
 gain.connect(ctx.destination);
+
 
 osc.start(now+i*.35);
 
@@ -1543,7 +1719,14 @@ now+i*.35+.3
 }
 
 }catch(e){}
+
 }
+
+
+
+/* ==================================================
+   NOTIFICACIONES
+================================================== */
 
 function updateNotificationStatus(){
 
@@ -1555,7 +1738,9 @@ $("notificationStatus").textContent=
 $("notificationBtn").style.display="none";
 
 return;
+
 }
+
 
 if(Notification.permission==="granted"){
 
@@ -1580,8 +1765,11 @@ $("notificationStatus").textContent=
 
 $("notificationBtn").textContent=
 "🔔 Activar avisos";
+
 }
+
 }
+
 
 $("notificationBtn").onclick=async()=>{
 
@@ -1592,14 +1780,18 @@ alert(
 );
 
 return;
+
 }
+
 
 try{
 
 let permission=
 await Notification.requestPermission();
 
+
 updateNotificationStatus();
+
 
 if(permission==="granted"){
 
@@ -1615,6 +1807,7 @@ body:
 
 }catch(e){}
 
+
 playAlertSound();
 
 }
@@ -1629,6 +1822,8 @@ alert(
 
 };
 
+
+
 function checkAlerts(){
 
 let ahora=new Date();
@@ -1636,22 +1831,30 @@ let ahora=new Date();
 let hora=ahora.getHours();
 let minuto=ahora.getMinutes();
 
+
 if(hora!==14||minuto>5)return;
+
 
 let lista=tomorrowEvents();
 
+
 if(!lista.length)return;
 
+
 let key=alertKey();
+
 
 if(localStorage.getItem(key)==="1")
 return;
 
+
 localStorage.setItem(key,"1");
+
 
 playAlertSound();
 
 showAlertMessage(lista);
+
 
 if(
 "Notification" in window&&
@@ -1680,21 +1883,960 @@ e.text
 
 }
 
-/* ARRANQUE */
+
+
+/* ==================================================
+   MI ARCHIVO
+================================================== */
+
+const ARCHIVO_KEY="mi_archivo_v1";
+
+
+const DEFAULT_CATEGORIES=[
+
+{
+id:"coche",
+name:"Coche",
+icon:"🚗"
+},
+
+{
+id:"casa",
+name:"Casa",
+icon:"🏠"
+},
+
+{
+id:"telefonia",
+name:"Telefonía",
+icon:"📱"
+},
+
+{
+id:"seguros",
+name:"Seguros",
+icon:"🛡️"
+},
+
+{
+id:"vacaciones",
+name:"Vacaciones",
+icon:"🏖️"
+}
+
+];
+
+
+let data;
+
+
+try{
+
+data=JSON.parse(
+localStorage.getItem(ARCHIVO_KEY)||"null"
+);
+
+}catch(e){
+
+data=null;
+
+}
+
+
+if(
+!data||
+!Array.isArray(data.categories)||
+!Array.isArray(data.records)
+){
+
+data={
+
+categories:
+DEFAULT_CATEGORIES.map(x=>({...x})),
+
+records:[]
+
+};
+
+saveArchivo();
+
+}
+
+
+let currentCategory=null;
+
+
+let editArchivoId=null;
+
+
+function saveArchivo(){
+
+localStorage.setItem(
+ARCHIVO_KEY,
+JSON.stringify(data)
+);
+
+}
+
+
+
+/* ==================================================
+   CATEGORIAS ARCHIVO
+================================================== */
+
+function renderCategories(){
+
+$("categories").innerHTML=
+data.categories.map(c=>`
+
+<div
+class="category"
+data-cat="${esc(c.id)}"
+>
+
+<div class="ico">
+${esc(c.icon)}
+</div>
+
+<div class="name">
+${esc(c.name)}
+</div>
+
+</div>
+
+`).join("");
+
+
+document
+.querySelectorAll(".category")
+.forEach(el=>{
+
+el.onclick=()=>{
+
+currentCategory=
+el.dataset.cat;
+
+renderRecords();
+
+showTab("lista");
+
+};
+
+});
+
+}
+
+
+function categoryById(id){
+
+return data.categories.find(
+c=>c.id===id
+);
+
+}
+
+
+
+/* ==================================================
+   DATOS ARCHIVO
+================================================== */
+
+function renderRecords(){
+
+const c=
+categoryById(currentCategory);
+
+
+if(!c){
+
+showTab("archivo");
+
+return;
+
+}
+
+
+$("listTitle").textContent=
+(c.icon||"📁")+" "+c.name;
+
+
+const list=
+data.records
+.filter(r=>
+r.category===currentCategory
+)
+.sort((a,b)=>
+String(a.title)
+.localeCompare(
+String(b.title),
+"es"
+)
+);
+
+
+$("recordList").innerHTML=
+list.length?
+
+list.map(r=>`
+
+<div class="record">
+
+<div class="rtitle">
+${esc(r.title)}
+</div>
+
+${r.details?
+
+`<div class="rdata">
+${esc(r.details)}
+</div>`:
+
+""}
+
+<div class="actions">
+
+<button
+class="editArchivoBtn"
+data-id="${esc(r.id)}"
+>
+✏️ Editar
+</button>
+
+<button
+class="deleteArchivoBtn"
+data-id="${esc(r.id)}"
+>
+🗑️ Borrar
+</button>
+
+</div>
+
+</div>
+
+`).join(""):
+
+`<div class="empty">
+No hay datos en este apartado.
+</div>`;
+
+}
+
+
+
+/* ==================================================
+   VOLVER ARCHIVO
+================================================== */
+
+$("backBtn").onclick=()=>{
+
+currentCategory=null;
+
+renderCategories();
+
+showTab("archivo");
+
+};
+
+
+
+/* ==================================================
+   NUEVO DATO
+================================================== */
+
+$("newRecordBtn").onclick=()=>{
+
+if(currentCategory){
+
+openRecordForm(
+currentCategory,
+null
+);
+
+}
+
+};
+
+
+
+/* ==================================================
+   EDITAR / BORRAR ARCHIVO
+================================================== */
+
+document.addEventListener(
+"click",
+e=>{
+
+const b=
+e.target.closest(
+".editArchivoBtn,.deleteArchivoBtn"
+);
+
+if(!b)return;
+
+
+const id=b.dataset.id;
+
+
+const r=
+data.records.find(
+x=>String(x.id)===String(id)
+);
+
+
+if(!r)return;
+
+
+if(
+b.classList.contains("editArchivoBtn")
+){
+
+openRecordForm(
+r.category,
+r
+);
+
+}
+
+
+else if(
+confirm("¿Borrar este dato?")
+){
+
+data.records=
+data.records.filter(
+x=>String(x.id)!==String(id)
+);
+
+saveArchivo();
+
+renderRecords();
+
+}
+
+});
+
+
+
+/* ==================================================
+   FORMULARIO ARCHIVO
+================================================== */
+
+function openRecordForm(
+categoryId,
+r
+){
+
+editArchivoId=
+r?
+r.id:
+null;
+
+
+const m=
+document.createElement("div");
+
+
+m.className="modal";
+
+
+m.innerHTML=
+
+`
+
+<div class="modalbox">
+
+<h2>
+
+${
+editArchivoId?
+"✏️ Editar dato":
+"➕ Nuevo dato"
+}
+
+</h2>
+
+
+<label>
+Nombre / concepto
+</label>
+
+<input
+id="rt"
+placeholder="Ej.: ITV, seguro, recibo..."
+value="${esc(r?.title||"")}"
+>
+
+
+<label>
+Datos
+</label>
+
+<textarea
+id="rd"
+placeholder="Escribe aquí los datos que quieras guardar..."
+>${esc(r?.details||"")}</textarea>
+
+
+<div
+style="display:flex;gap:7px"
+>
+
+<button
+class="btn"
+id="rs"
+>
+Guardar
+</button>
+
+
+<button
+class="btn out"
+id="rc"
+>
+Cancelar
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+document.body.appendChild(m);
+
+
+$("rc").onclick=()=>
+m.remove();
+
+
+$("rs").onclick=()=>{
+
+const title=
+$("rt").value.trim();
+
+
+if(!title){
+
+alert(
+"Escribe un nombre o concepto."
+);
+
+$("rt").focus();
+
+return;
+
+}
+
+
+const x={
+
+id:
+editArchivoId||
+Date.now(),
+
+category:
+categoryId,
+
+title:
+title,
+
+details:
+$("rd").value.trim()
+
+};
+
+
+if(editArchivoId){
+
+data.records=
+data.records.map(a=>
+
+String(a.id)===
+String(editArchivoId)?
+
+x:
+a
+
+);
+
+}else{
+
+data.records.push(x);
+
+}
+
+
+saveArchivo();
+
+m.remove();
+
+renderRecords();
+
+};
+
+}
+
+
+
+/* ==================================================
+   NUEVO APARTADO
+================================================== */
+
+$("newCategoryBtn").onclick=()=>{
+
+const m=
+document.createElement("div");
+
+
+m.className="modal";
+
+
+m.innerHTML=
+
+`
+
+<div class="modalbox">
+
+<h2>
+➕ Nuevo apartado
+</h2>
+
+
+<label>
+Nombre
+</label>
+
+<input
+id="cn"
+placeholder="Ej.: Mascotas, Ocio, Trámites..."
+>
+
+
+<label>
+Icono
+</label>
+
+<input
+id="ci"
+placeholder="📁"
+value="📁"
+>
+
+
+<div
+style="display:flex;gap:7px"
+>
+
+<button
+class="btn"
+id="cs"
+>
+Guardar
+</button>
+
+
+<button
+class="btn out"
+id="cc"
+>
+Cancelar
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+document.body.appendChild(m);
+
+
+$("cc").onclick=()=>
+m.remove();
+
+
+$("cs").onclick=()=>{
+
+const name=
+$("cn").value.trim();
+
+
+const icon=
+$("ci").value.trim()||
+"📁";
+
+
+if(!name){
+
+alert(
+"Escribe el nombre del apartado."
+);
+
+$("cn").focus();
+
+return;
+
+}
+
+
+data.categories.push({
+
+id:
+"cat_"+Date.now(),
+
+name:
+name,
+
+icon:
+icon
+
+});
+
+
+saveArchivo();
+
+m.remove();
+
+renderCategories();
+
+};
+
+};
+
+
+
+/* ==================================================
+   EXPORTAR AGENDA
+================================================== */
+
+$("exportAgenda").onclick=()=>{
+
+let b=new Blob(
+[
+JSON.stringify(
+{
+version:5,
+events
+},
+null,
+2
+)
+],
+{type:"application/json"}
+);
+
+
+let a=document.createElement("a");
+
+
+a.href=
+URL.createObjectURL(b);
+
+
+a.download=
+"mi_agenda_"+today()+".json";
+
+
+a.click();
+
+
+setTimeout(
+()=>
+URL.revokeObjectURL(a.href),
+1000
+);
+
+};
+
+
+
+/* ==================================================
+   IMPORTAR AGENDA
+================================================== */
+
+$("importAgendaBtn").onclick=()=>{
+
+if(
+!events.length||
+confirm(
+"⚠️ IMPORTAR AGENDA\n\n"+
+"La importación sustituirá los datos actuales "+
+"de Mi Agenda.\n\n"+
+"¿Quieres continuar?"
+)
+){
+
+$("fileAgenda").click();
+
+}
+
+};
+
+
+$("fileAgenda").onchange=e=>{
+
+let f=e.target.files[0];
+
+if(!f)return;
+
+
+let r=new FileReader();
+
+
+r.onload=()=>{
+
+try{
+
+let d=JSON.parse(r.result);
+
+
+if(!Array.isArray(d.events))
+throw 0;
+
+
+events=d.events;
+
+
+saveAgenda();
+
+
+selected=today();
+
+view=new Date();
+
+
+renderToday();
+renderNext();
+renderCalendar();
+
+
+alert(
+"Agenda importada correctamente."
+);
+
+
+}catch(x){
+
+alert("Archivo no válido.");
+
+}
+
+
+$("fileAgenda").value="";
+
+};
+
+
+r.readAsText(f);
+
+};
+
+
+
+/* ==================================================
+   EXPORTAR ARCHIVO
+================================================== */
+
+$("exportArchivo").onclick=()=>{
+
+const blob=
+new Blob(
+
+[
+JSON.stringify(
+
+{
+version:1,
+
+categories:
+data.categories,
+
+records:
+data.records
+
+},
+
+null,
+
+2
+
+)
+
+],
+
+{
+type:"application/json"
+}
+
+);
+
+
+const a=
+document.createElement("a");
+
+
+a.href=
+URL.createObjectURL(blob);
+
+
+a.download=
+"mi_archivo_"+
+
+new Date()
+.toISOString()
+.slice(0,10)+
+
+".json";
+
+
+a.click();
+
+
+setTimeout(
+()=>
+URL.revokeObjectURL(a.href),
+1000
+);
+
+};
+
+
+
+/* ==================================================
+   IMPORTAR ARCHIVO
+================================================== */
+
+$("importArchivoBtn").onclick=()=>{
+
+if(
+
+!data.records.length||
+
+confirm(
+
+"⚠️ IMPORTAR ARCHIVO\n\n"+
+"La importación sustituirá los datos actuales "+
+"de Mi Archivo.\n\n"+
+"¿Quieres continuar?"
+
+)
+
+){
+
+$("fileArchivo").click();
+
+}
+
+};
+
+
+$("fileArchivo").onchange=e=>{
+
+const f=
+e.target.files[0];
+
+
+if(!f)return;
+
+
+const r=
+new FileReader();
+
+
+r.onload=()=>{
+
+try{
+
+const d=
+JSON.parse(r.result);
+
+
+if(
+!Array.isArray(d.categories)||
+!Array.isArray(d.records)
+)
+throw 0;
+
+
+data={
+
+categories:
+d.categories,
+
+records:
+d.records
+
+};
+
+
+saveArchivo();
+
+
+currentCategory=null;
+
+renderCategories();
+
+showTab("archivo");
+
+
+alert(
+"Archivo importado correctamente."
+);
+
+
+}catch(x){
+
+alert(
+"Archivo no válido."
+);
+
+}
+
+
+$("fileArchivo").value="";
+
+};
+
+
+r.readAsText(f);
+
+};
+
+
+
+/* ==================================================
+   ARRANQUE
+================================================== */
+
+/*
+   IMPORTANTE:
+   La aplicación arranca siempre en MI AGENDA.
+*/
+
+showTab("hoy");
+
+renderToday();
+
+renderNext();
+
+renderCalendar();
+
+renderCategories();
+
+updateNotificationStatus();
+
 
 setInterval(
 checkAlerts,
 30000
 );
 
+
 checkAlerts();
 
-renderCategories();
-renderToday();
-renderNext();
-renderCalendar();
-updateNotificationStatus();
-
 </script>
+
 </body>
 </html>
