@@ -130,7 +130,9 @@ font-size:.8rem;
 min-height:38px
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
 width:100%;
 background:var(--inp);
 color:#fff;
@@ -148,6 +150,15 @@ min-height:75px
 label{
 font-size:.75rem;
 color:var(--sub)
+}
+
+.formrow{
+display:flex;
+gap:8px
+}
+
+.formrow>div{
+flex:1
 }
 
 .calendar{
@@ -233,13 +244,6 @@ font-size:.9rem;
 margin:3px 0
 }
 
-.empty{
-text-align:center;
-color:var(--sub);
-padding:18px;
-font-size:.8rem
-}
-
 .actions{
 display:flex;
 gap:7px;
@@ -319,6 +323,13 @@ display:none
 color:var(--yel)
 }
 
+.empty{
+text-align:center;
+color:var(--sub);
+padding:18px;
+font-size:.8rem
+}
+
 .modal{
 position:fixed;
 inset:0;
@@ -342,15 +353,6 @@ text-align:center;
 margin-bottom:14px
 }
 
-.formrow{
-display:flex;
-gap:8px
-}
-
-.formrow>div{
-flex:1
-}
-
 .repeatbox{
 display:flex;
 align-items:center;
@@ -366,8 +368,9 @@ height:20px;
 margin:0
 }
 
+
 /* =========================
-   MI ARCHIVO
+   ARCHIVO
 ========================= */
 
 .grid{
@@ -441,27 +444,32 @@ line-height:1.5
 </style>
 </head>
 
+
 <body>
 
 <header>
 <h1>📅 MI AGENDA</h1>
 </header>
 
+
 <div class="container">
 
 
-<!-- ==================================================
-     MI AGENDA — HOY
-================================================== -->
+<!-- =====================================================
+     HOY
+===================================================== -->
 
 <section id="hoy" class="tab active">
 
 <div id="notice" class="notice"></div>
 
+
 <div class="card">
 
 <div class="todaybox">
+
 <div class="bigday" id="todayTitle"></div>
+
 </div>
 
 <div id="todayList"></div>
@@ -516,11 +524,12 @@ Nueva anotación
 
 
 
-<!-- ==================================================
-     MI AGENDA — CALENDARIO
-================================================== -->
+<!-- =====================================================
+     AGENDA
+===================================================== -->
 
 <section id="agenda" class="tab">
+
 
 <div class="card">
 
@@ -531,7 +540,8 @@ Nueva anotación
 </button>
 
 <h2 id="monthTitle"
-style="margin:0;text-align:center;flex:1"></h2>
+style="margin:0;text-align:center;flex:1">
+</h2>
 
 <button class="btn out sm" id="next">
 ❯
@@ -540,8 +550,12 @@ style="margin:0;text-align:center;flex:1"></h2>
 </div>
 
 
-<button class="btn out" id="todayBtn" style="margin:8px 0 10px">
+<button class="btn out"
+id="todayBtn"
+style="margin:8px 0 10px">
+
 📅 Ir a hoy
+
 </button>
 
 
@@ -566,11 +580,15 @@ style="margin:0;text-align:center;flex:1"></h2>
 
 
 
-<!-- ==================================================
-     MI ARCHIVO — INICIO
-================================================== -->
+<!-- =====================================================
+     ARCHIVO
+===================================================== -->
 
 <section id="archivo" class="tab">
+
+
+<div id="archivoInicio">
+
 
 <div class="card">
 
@@ -594,15 +612,11 @@ Selecciona un apartado para consultar o añadir datos.
 
 </div>
 
-</section>
+</div>
 
 
 
-<!-- ==================================================
-     MI ARCHIVO — LISTA
-================================================== -->
-
-<section id="lista" class="tab">
+<div id="archivoLista" style="display:none">
 
 <div class="card">
 
@@ -626,34 +640,35 @@ Selecciona un apartado para consultar o añadir datos.
 
 </div>
 
+</div>
+
 </section>
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      AJUSTES
-================================================== -->
+===================================================== -->
 
 <section id="ajustes" class="tab">
+
 
 <div class="card">
 
 <h2>⚙️ Ajustes</h2>
 
-
 <button class="btn out" id="exportAgenda">
-💾 Exportar agenda
+💾 Exportar Agenda
 </button>
 
 <br><br>
 
-
 <button class="btn out" id="importAgendaBtn">
-📥 Importar agenda
+📥 Importar Agenda
 </button>
 
 <input
-id="fileAgenda"
+id="agendaFile"
 type="file"
 accept=".json"
 style="display:none"
@@ -666,20 +681,18 @@ style="display:none"
 
 <h2>📁 Mi Archivo</h2>
 
-
 <button class="btn out" id="exportArchivo">
-💾 Exportar archivo
+💾 Exportar Archivo
 </button>
 
 <br><br>
 
-
 <button class="btn out" id="importArchivoBtn">
-📥 Importar archivo
+📥 Importar Archivo
 </button>
 
 <input
-id="fileArchivo"
+id="archivoFile"
 type="file"
 accept=".json"
 style="display:none"
@@ -690,12 +703,11 @@ style="display:none"
 
 <div class="card">
 
-<h2>ℹ️ Aplicación</h2>
+<h2>ℹ️ Información</h2>
 
 <p class="small">
 
-Mi Agenda + Mi Archivo.<br><br>
-
+Agenda personal y archivo de datos.
 Los datos se guardan automáticamente
 en este dispositivo.
 
@@ -710,9 +722,9 @@ en este dispositivo.
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      NAVEGACION
-================================================== -->
+===================================================== -->
 
 <nav>
 
@@ -741,34 +753,33 @@ en este dispositivo.
 "use strict";
 
 
-/* ==================================================
+/* =====================================================
    FUNCIONES GENERALES
-================================================== */
+===================================================== */
 
 const $=id=>document.getElementById(id);
 
 
 const esc=s=>String(s??"").replace(
- /[&<>"']/g,
- m=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- }[m])
+/[&<>"']/g,
+m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[m])
 );
 
 
 
-/* ==================================================
-   MI AGENDA
-================================================== */
+/* =====================================================
+   AGENDA
+===================================================== */
 
 const AGENDA_KEY="mi_agenda_v5";
 
 let events=[];
-
 
 try{
 
@@ -784,7 +795,9 @@ events=[];
 
 
 let view=new Date();
+
 let selected=today();
+
 let editId=null;
 
 
@@ -801,7 +814,9 @@ String(d.getDate()).padStart(2,"0");
 
 function addDays(dateString,days){
 
-let d=new Date(dateString+"T12:00:00");
+let d=new Date(
+dateString+"T12:00:00"
+);
 
 d.setDate(d.getDate()+days);
 
@@ -824,7 +839,9 @@ JSON.stringify(events)
 
 function fmt(s){
 
-return new Date(s+"T12:00:00").toLocaleDateString(
+return new Date(
+s+"T12:00:00"
+).toLocaleDateString(
 "es-ES",
 {
 day:"2-digit",
@@ -844,90 +861,6 @@ viaje:"✈️ Viaje"
 };
 
 
-function showTab(n){
-
-[
-"hoy",
-"agenda",
-"archivo",
-"lista",
-"ajustes"
-].forEach(x=>
-$(x).classList.toggle(
-"active",
-x===n
-)
-);
-
-
-[
-"navHoy",
-"navAgenda",
-"navArchivo",
-"navAjustes"
-].forEach((x,i)=>
-$(x).classList.toggle(
-"active",
-[
-"hoy",
-"agenda",
-"archivo",
-"ajustes"
-][i]===n
-)
-);
-
-
-if(n==="hoy"){
-
-renderToday();
-renderNext();
-
-}
-
-
-if(n==="agenda"){
-
-renderCalendar();
-
-}
-
-
-if(n==="archivo"){
-
-currentCategory=null;
-renderCategories();
-
-}
-
-}
-
-
-$("navHoy").onclick=()=>{
-showTab("hoy");
-};
-
-
-$("navAgenda").onclick=()=>{
-showTab("agenda");
-};
-
-
-$("navArchivo").onclick=()=>{
-showTab("archivo");
-};
-
-
-$("navAjustes").onclick=()=>{
-showTab("ajustes");
-};
-
-
-
-/* ==================================================
-   EVENTOS
-================================================== */
-
 function allEvents(){
 
 let a=[...events];
@@ -940,7 +873,9 @@ events
 .forEach(e=>{
 
 let originalYear=
-new Date(e.date+"T12:00:00").getFullYear();
+new Date(
+e.date+"T12:00:00"
+).getFullYear();
 
 
 for(let i=-2;i<5;i++){
@@ -976,9 +911,9 @@ type==="medico"?"🩺":
 }
 
 
-function card(e){
+function agendaCard(e){
 
-return '<div class="event '+e.type+'" data-id="'+esc(e.id)+'">'+
+return '<div class="event '+e.type+'">'+
 
 '<div class="etype">'+
 names[e.type]+
@@ -998,17 +933,17 @@ esc(e.text)+
 '<div style="font-size:.72rem;color:var(--sub)">'+
 esc(e.note)+
 '</div>':
-'')+
+"")+
 
 '<div class="actions">'+
 
-'<button class="editBtn" data-id="'+esc(e.id)+'">'+
-'✏️ Editar'+
-'</button>'+
+'<button class="editBtn" data-id="'+
+esc(e.id)+
+'">✏️ Editar</button>'+
 
-'<button class="deleteBtn" data-id="'+esc(e.id)+'">'+
-'🗑️ Borrar'+
-'</button>'+
+'<button class="deleteBtn" data-id="'+
+esc(e.id)+
+'">🗑️ Borrar</button>'+
 
 '</div></div>';
 
@@ -1016,9 +951,9 @@ esc(e.note)+
 
 
 
-/* ==================================================
-   HOY
-================================================== */
+/* =====================================================
+   MOSTRAR HOY
+===================================================== */
 
 function renderToday(){
 
@@ -1044,7 +979,7 @@ let a=allEvents()
 
 
 $("todayList").innerHTML=a.length?
-a.map(card).join(""):
+a.map(agendaCard).join(""):
 '<div class="empty">'+
 'No tienes nada previsto para hoy. 👍'+
 '</div>';
@@ -1056,15 +991,16 @@ updateNotificationStatus();
 
 
 
-/* ==================================================
+/* =====================================================
    PROXIMOS AVISOS
-================================================== */
+===================================================== */
 
 function renderNext(){
 
 let t=today();
 
 let manana=addDays(t,1);
+
 let pasado=addDays(t,2);
 
 
@@ -1097,12 +1033,16 @@ let html="";
 
 [manana,pasado].forEach((fecha,i)=>{
 
-let lista=a.filter(e=>e.date===fecha);
+let lista=
+a.filter(e=>e.date===fecha);
+
 
 if(!lista.length)return;
 
 
-let d=new Date(fecha+"T12:00:00");
+let d=new Date(
+fecha+"T12:00:00"
+);
 
 
 let titulo=
@@ -1142,7 +1082,7 @@ esc(e.text)+
 '<div class="nexttime">⏰ '+
 esc(e.time)+
 '</div>':
-'')+
+"")+
 
 '</div>';
 
@@ -1157,13 +1097,14 @@ $("nextList").innerHTML=html;
 
 
 
-/* ==================================================
+/* =====================================================
    CALENDARIO
-================================================== */
+===================================================== */
 
 function renderCalendar(){
 
 let y=view.getFullYear();
+
 let m=view.getMonth();
 
 let first=
@@ -1208,7 +1149,8 @@ String(m+1).padStart(2,"0")+"-"+
 String(d).padStart(2,"0");
 
 
-let es=a.filter(e=>e.date===z);
+let es=
+a.filter(e=>e.date===z);
 
 
 let dots=es.length?
@@ -1235,7 +1177,7 @@ $("calendar").innerHTML=h;
 
 document
 .querySelectorAll(".cal[data-date]")
-.forEach(x=>
+.forEach(x=>{
 
 x.onclick=()=>{
 
@@ -1243,9 +1185,9 @@ selected=x.dataset.date;
 
 renderCalendar();
 
-}
+};
 
-);
+});
 
 
 renderDay();
@@ -1253,10 +1195,12 @@ renderDay();
 }
 
 
-
 function renderDay(){
 
-let d=new Date(selected+"T12:00:00");
+let d=
+new Date(
+selected+"T12:00:00"
+);
 
 
 $("dayTitle").textContent=
@@ -1279,7 +1223,7 @@ let a=allEvents()
 
 
 $("dayList").innerHTML=a.length?
-a.map(card).join(""):
+a.map(agendaCard).join(""):
 '<div class="empty">'+
 'No hay anotaciones para este día.'+
 '</div>';
@@ -1288,114 +1232,9 @@ a.map(card).join(""):
 
 
 
-/* ==================================================
-   BOTONES AGENDA
-================================================== */
-
-$("prev").onclick=()=>{
-
-view.setMonth(view.getMonth()-1);
-
-renderCalendar();
-
-};
-
-
-$("next").onclick=()=>{
-
-view.setMonth(view.getMonth()+1);
-
-renderCalendar();
-
-};
-
-
-$("todayBtn").onclick=()=>{
-
-selected=today();
-
-view=new Date();
-
-renderCalendar();
-
-};
-
-
-$("newBtn").onclick=()=>
-openAgendaForm(today(),null);
-
-
-$("dayNew").onclick=()=>
-openAgendaForm(selected,null);
-
-
-
-/* ==================================================
-   EDITAR / BORRAR AGENDA
-================================================== */
-
-document.addEventListener("click",function(e){
-
-let b=e.target.closest(
-".editBtn,.deleteBtn"
-);
-
-if(!b)return;
-
-
-let id=b.getAttribute("data-id");
-
-
-let x=events.find(a=>
-String(a.id)===String(id)
-);
-
-
-if(!x){
-
-alert(
-"Este es un cumpleaños anual.\n"+
-"Debes modificar el cumpleaños original."
-);
-
-return;
-
-}
-
-
-if(b.classList.contains("editBtn")){
-
-openAgendaForm(x.date,x);
-
-return;
-
-}
-
-
-if(
-b.classList.contains("deleteBtn")&&
-confirm("¿Borrar esta anotación?")
-){
-
-events=events.filter(a=>
-String(a.id)!==String(id)
-);
-
-saveAgenda();
-
-renderToday();
-renderNext();
-renderCalendar();
-
-}
-
-});
-
-
-
-/* ==================================================
+/* =====================================================
    FORMULARIO AGENDA
-================================================== */
+===================================================== */
 
 function openAgendaForm(date,e){
 
@@ -1408,6 +1247,7 @@ m.className="modal";
 
 
 m.innerHTML=
+
 '<div class="modalbox">'+
 
 '<h2>'+
@@ -1419,12 +1259,10 @@ m.innerHTML=
 '<label>Tipo</label>'+
 
 '<select id="ft">'+
-
 '<option value="cita">🔵 Cita</option>'+
 '<option value="cumple">🎂 Cumpleaños</option>'+
 '<option value="medico">🩺 Médico</option>'+
 '<option value="viaje">✈️ Viaje</option>'+
-
 '</select>'+
 
 '<div class="formrow">'+
@@ -1460,7 +1298,6 @@ esc(e&&e.note||"")+
 '<input id="fr" type="checkbox" '+
 (e&&e.repeat?"checked":"")+
 '>'+
-
 ' Repetir cada año</label>'+
 
 '<div style="display:flex;gap:7px">'+
@@ -1495,13 +1332,13 @@ $("ft").onchange=rep;
 rep();
 
 
-$("fc").onclick=()=>
-m.remove();
+$("fc").onclick=()=>m.remove();
 
 
 $("fs").onclick=()=>{
 
-let text=$("fx").value.trim();
+let text=
+$("fx").value.trim();
 
 
 if(!text){
@@ -1554,8 +1391,7 @@ if(editId){
 
 events=events.map(a=>
 String(a.id)===String(editId)?
-x:
-a
+x:a
 );
 
 }else{
@@ -1579,7 +1415,9 @@ m.remove();
 
 
 renderToday();
+
 renderNext();
+
 renderCalendar();
 
 checkAlerts();
@@ -1590,9 +1428,75 @@ checkAlerts();
 
 
 
-/* ==================================================
+/* =====================================================
+   EVENTOS CLICK
+===================================================== */
+
+document.addEventListener("click",function(e){
+
+let b=e.target.closest(
+".editBtn,.deleteBtn"
+);
+
+
+if(!b)return;
+
+
+let id=b.getAttribute("data-id");
+
+
+let x=events.find(a=>
+String(a.id)===String(id)
+);
+
+
+if(!x){
+
+alert(
+"Este es un cumpleaños anual.\n"+
+"Debes modificar el cumpleaños original."
+);
+
+return;
+
+}
+
+
+if(b.classList.contains("editBtn")){
+
+openAgendaForm(x.date,x);
+
+return;
+
+}
+
+
+if(
+b.classList.contains("deleteBtn")&&
+confirm("¿Borrar esta anotación?")
+){
+
+events=events.filter(a=>
+String(a.id)!==String(id)
+);
+
+saveAgenda();
+
+renderToday();
+
+renderNext();
+
+renderCalendar();
+
+}
+
+});
+
+
+
+/* =====================================================
    AVISOS
-================================================== */
+===================================================== */
 
 function alertKey(){
 
@@ -1610,6 +1514,71 @@ return allEvents()
 .sort((a,b)=>
 (a.time||"").localeCompare(b.time||"")
 );
+
+}
+
+
+function playAlertSound(){
+
+try{
+
+let AudioContext=
+window.AudioContext||
+window.webkitAudioContext;
+
+if(!AudioContext)return;
+
+
+let ctx=new AudioContext();
+
+let now=ctx.currentTime;
+
+
+for(let i=0;i<3;i++){
+
+let osc=ctx.createOscillator();
+
+let gain=ctx.createGain();
+
+
+osc.type="sine";
+
+osc.frequency.value=
+i===0?880:
+i===1?1100:
+880;
+
+
+gain.gain.setValueAtTime(
+.0001,
+now+i*.35
+);
+
+gain.gain.exponentialRampToValueAtTime(
+.35,
+now+i*.35+.03
+);
+
+gain.gain.exponentialRampToValueAtTime(
+.0001,
+now+i*.35+.28
+);
+
+
+osc.connect(gain);
+
+gain.connect(ctx.destination);
+
+
+osc.start(now+i*.35);
+
+osc.stop(
+now+i*.35+.3
+);
+
+}
+
+}catch(e){}
 
 }
 
@@ -1639,7 +1608,6 @@ e.text+
 $("notice").innerHTML=
 "<strong>🔔 AVISO</strong><br><br>"+
 "Mañana tienes:<br>"+
-
 lista.map(e=>
 (e.time?
 "⏰ "+esc(e.time)+" — ":
@@ -1655,78 +1623,6 @@ alert(texto);
 
 }
 
-
-function playAlertSound(){
-
-try{
-
-let AudioContext=
-window.AudioContext||
-window.webkitAudioContext;
-
-if(!AudioContext)return;
-
-
-let ctx=new AudioContext();
-let now=ctx.currentTime;
-
-
-for(let i=0;i<3;i++){
-
-let osc=ctx.createOscillator();
-let gain=ctx.createGain();
-
-
-osc.type="sine";
-
-osc.frequency.value=
-i===0?
-880:
-i===1?
-1100:
-880;
-
-
-gain.gain.setValueAtTime(
-.0001,
-now+i*.35
-);
-
-
-gain.gain.exponentialRampToValueAtTime(
-.35,
-now+i*.35+.03
-);
-
-
-gain.gain.exponentialRampToValueAtTime(
-.0001,
-now+i*.35+.28
-);
-
-
-osc.connect(gain);
-
-gain.connect(ctx.destination);
-
-
-osc.start(now+i*.35);
-
-osc.stop(
-now+i*.35+.3
-);
-
-}
-
-}catch(e){}
-
-}
-
-
-
-/* ==================================================
-   NOTIFICACIONES
-================================================== */
 
 function updateNotificationStatus(){
 
@@ -1823,12 +1719,12 @@ alert(
 };
 
 
-
 function checkAlerts(){
 
 let ahora=new Date();
 
 let hora=ahora.getHours();
+
 let minuto=ahora.getMinutes();
 
 
@@ -1885,9 +1781,9 @@ e.text
 
 
 
-/* ==================================================
-   MI ARCHIVO
-================================================== */
+/* =====================================================
+   ARCHIVO
+===================================================== */
 
 const ARCHIVO_KEY="mi_archivo_v1";
 
@@ -1927,35 +1823,32 @@ icon:"🏖️"
 ];
 
 
-let data;
+let archivoData;
 
 
 try{
 
-data=JSON.parse(
+archivoData=JSON.parse(
 localStorage.getItem(ARCHIVO_KEY)||"null"
 );
 
 }catch(e){
 
-data=null;
+archivoData=null;
 
 }
 
 
 if(
-!data||
-!Array.isArray(data.categories)||
-!Array.isArray(data.records)
+!archivoData||
+!Array.isArray(archivoData.categories)||
+!Array.isArray(archivoData.records)
 ){
 
-data={
-
+archivoData={
 categories:
 DEFAULT_CATEGORIES.map(x=>({...x})),
-
 records:[]
-
 };
 
 saveArchivo();
@@ -1965,29 +1858,32 @@ saveArchivo();
 
 let currentCategory=null;
 
-
-let editArchivoId=null;
+let archivoEditId=null;
 
 
 function saveArchivo(){
 
 localStorage.setItem(
 ARCHIVO_KEY,
-JSON.stringify(data)
+JSON.stringify(archivoData)
 );
 
 }
 
 
+function categoryById(id){
 
-/* ==================================================
-   CATEGORIAS ARCHIVO
-================================================== */
+return archivoData.categories.find(
+c=>c.id===id
+);
+
+}
+
 
 function renderCategories(){
 
 $("categories").innerHTML=
-data.categories.map(c=>`
+archivoData.categories.map(c=>`
 
 <div
 class="category"
@@ -2018,28 +1914,12 @@ el.dataset.cat;
 
 renderRecords();
 
-showTab("lista");
-
 };
 
 });
 
 }
 
-
-function categoryById(id){
-
-return data.categories.find(
-c=>c.id===id
-);
-
-}
-
-
-
-/* ==================================================
-   DATOS ARCHIVO
-================================================== */
 
 function renderRecords(){
 
@@ -2049,11 +1929,16 @@ categoryById(currentCategory);
 
 if(!c){
 
-showTab("archivo");
+archivoInicio();
 
 return;
 
 }
+
+
+$("archivoInicio").style.display="none";
+
+$("archivoLista").style.display="block";
 
 
 $("listTitle").textContent=
@@ -2061,13 +1946,12 @@ $("listTitle").textContent=
 
 
 const list=
-data.records
+archivoData.records
 .filter(r=>
 r.category===currentCategory
 )
 .sort((a,b)=>
-String(a.title)
-.localeCompare(
+String(a.title).localeCompare(
 String(b.title),
 "es"
 )
@@ -2086,24 +1970,22 @@ ${esc(r.title)}
 </div>
 
 ${r.details?
-
 `<div class="rdata">
 ${esc(r.details)}
 </div>`:
-
 ""}
 
 <div class="actions">
 
 <button
-class="editArchivoBtn"
+class="archivoEditBtn"
 data-id="${esc(r.id)}"
 >
 ✏️ Editar
 </button>
 
 <button
-class="deleteArchivoBtn"
+class="archivoDeleteBtn"
 data-id="${esc(r.id)}"
 >
 🗑️ Borrar
@@ -2122,26 +2004,25 @@ No hay datos en este apartado.
 }
 
 
-
-/* ==================================================
-   VOLVER ARCHIVO
-================================================== */
-
-$("backBtn").onclick=()=>{
+function archivoInicio(){
 
 currentCategory=null;
 
+$("archivoInicio").style.display="block";
+
+$("archivoLista").style.display="none";
+
 renderCategories();
 
-showTab("archivo");
+}
+
+
+$("backBtn").onclick=()=>{
+
+archivoInicio();
 
 };
 
-
-
-/* ==================================================
-   NUEVO DATO
-================================================== */
 
 $("newRecordBtn").onclick=()=>{
 
@@ -2157,19 +2038,15 @@ null
 };
 
 
-
-/* ==================================================
-   EDITAR / BORRAR ARCHIVO
-================================================== */
-
 document.addEventListener(
 "click",
-e=>{
+function(e){
 
 const b=
 e.target.closest(
-".editArchivoBtn,.deleteArchivoBtn"
+".archivoEditBtn,.archivoDeleteBtn"
 );
+
 
 if(!b)return;
 
@@ -2178,7 +2055,7 @@ const id=b.dataset.id;
 
 
 const r=
-data.records.find(
+archivoData.records.find(
 x=>String(x.id)===String(id)
 );
 
@@ -2186,24 +2063,25 @@ x=>String(x.id)===String(id)
 if(!r)return;
 
 
-if(
-b.classList.contains("editArchivoBtn")
-){
+if(b.classList.contains("archivoEditBtn")){
 
 openRecordForm(
 r.category,
 r
 );
 
+return;
+
 }
 
 
-else if(
+if(
+b.classList.contains("archivoDeleteBtn")&&
 confirm("¿Borrar este dato?")
 ){
 
-data.records=
-data.records.filter(
+archivoData.records=
+archivoData.records.filter(
 x=>String(x.id)!==String(id)
 );
 
@@ -2216,39 +2094,27 @@ renderRecords();
 });
 
 
+function openRecordForm(categoryId,r){
 
-/* ==================================================
-   FORMULARIO ARCHIVO
-================================================== */
-
-function openRecordForm(
-categoryId,
-r
-){
-
-editArchivoId=
+archivoEditId=
 r?
 r.id:
 null;
 
 
-const m=
-document.createElement("div");
-
+const m=document.createElement("div");
 
 m.className="modal";
 
 
-m.innerHTML=
-
-`
+m.innerHTML=`
 
 <div class="modalbox">
 
 <h2>
 
 ${
-editArchivoId?
+archivoEditId?
 "✏️ Editar dato":
 "➕ Nuevo dato"
 }
@@ -2277,22 +2143,13 @@ placeholder="Escribe aquí los datos que quieras guardar..."
 >${esc(r?.details||"")}</textarea>
 
 
-<div
-style="display:flex;gap:7px"
->
+<div style="display:flex;gap:7px">
 
-<button
-class="btn"
-id="rs"
->
+<button class="btn" id="rs">
 Guardar
 </button>
 
-
-<button
-class="btn out"
-id="rc"
->
+<button class="btn out" id="rc">
 Cancelar
 </button>
 
@@ -2306,8 +2163,7 @@ Cancelar
 document.body.appendChild(m);
 
 
-$("rc").onclick=()=>
-m.remove();
+$("rc").onclick=()=>m.remove();
 
 
 $("rs").onclick=()=>{
@@ -2332,7 +2188,7 @@ return;
 const x={
 
 id:
-editArchivoId||
+archivoEditId||
 Date.now(),
 
 category:
@@ -2347,22 +2203,18 @@ $("rd").value.trim()
 };
 
 
-if(editArchivoId){
+if(archivoEditId){
 
-data.records=
-data.records.map(a=>
-
+archivoData.records=
+archivoData.records.map(a=>
 String(a.id)===
-String(editArchivoId)?
-
-x:
-a
-
+String(archivoEditId)?
+x:a
 );
 
 }else{
 
-data.records.push(x);
+archivoData.records.push(x);
 
 }
 
@@ -2378,23 +2230,14 @@ renderRecords();
 }
 
 
-
-/* ==================================================
-   NUEVO APARTADO
-================================================== */
-
 $("newCategoryBtn").onclick=()=>{
 
-const m=
-document.createElement("div");
-
+const m=document.createElement("div");
 
 m.className="modal";
 
 
-m.innerHTML=
-
-`
+m.innerHTML=`
 
 <div class="modalbox">
 
@@ -2424,22 +2267,13 @@ value="📁"
 >
 
 
-<div
-style="display:flex;gap:7px"
->
+<div style="display:flex;gap:7px">
 
-<button
-class="btn"
-id="cs"
->
+<button class="btn" id="cs">
 Guardar
 </button>
 
-
-<button
-class="btn out"
-id="cc"
->
+<button class="btn out" id="cc">
 Cancelar
 </button>
 
@@ -2453,8 +2287,7 @@ Cancelar
 document.body.appendChild(m);
 
 
-$("cc").onclick=()=>
-m.remove();
+$("cc").onclick=()=>m.remove();
 
 
 $("cs").onclick=()=>{
@@ -2464,8 +2297,7 @@ $("cn").value.trim();
 
 
 const icon=
-$("ci").value.trim()||
-"📁";
+$("ci").value.trim()||"📁";
 
 
 if(!name){
@@ -2481,16 +2313,13 @@ return;
 }
 
 
-data.categories.push({
+archivoData.categories.push({
 
-id:
-"cat_"+Date.now(),
+id:"cat_"+Date.now(),
 
-name:
-name,
+name:name,
 
-icon:
-icon
+icon:icon
 
 });
 
@@ -2507,9 +2336,156 @@ renderCategories();
 
 
 
-/* ==================================================
+/* =====================================================
+   NAVEGACION PRINCIPAL
+===================================================== */
+
+function showTab(n){
+
+[
+"hoy",
+"agenda",
+"archivo",
+"ajustes"
+].forEach(x=>
+
+$(x).classList.toggle(
+"active",
+x===n
+)
+
+);
+
+
+[
+"navHoy",
+"navAgenda",
+"navArchivo",
+"navAjustes"
+].forEach((x,i)=>
+
+$(x).classList.toggle(
+"active",
+[
+"hoy",
+"agenda",
+"archivo",
+"ajustes"
+][i]===n
+)
+
+);
+
+
+if(n==="hoy"){
+
+renderToday();
+
+renderNext();
+
+}
+
+
+if(n==="agenda"){
+
+renderCalendar();
+
+}
+
+
+if(n==="archivo"){
+
+archivoInicio();
+
+}
+
+}
+
+
+$("navHoy").onclick=()=>{
+
+showTab("hoy");
+
+};
+
+
+$("navAgenda").onclick=()=>{
+
+showTab("agenda");
+
+};
+
+
+$("navArchivo").onclick=()=>{
+
+showTab("archivo");
+
+};
+
+
+$("navAjustes").onclick=()=>{
+
+showTab("ajustes");
+
+};
+
+
+
+/* =====================================================
+   NAVEGACION AGENDA
+===================================================== */
+
+$("prev").onclick=()=>{
+
+view.setMonth(
+view.getMonth()-1
+);
+
+renderCalendar();
+
+};
+
+
+$("next").onclick=()=>{
+
+view.setMonth(
+view.getMonth()+1
+);
+
+renderCalendar();
+
+};
+
+
+$("todayBtn").onclick=()=>{
+
+selected=today();
+
+view=new Date();
+
+renderCalendar();
+
+};
+
+
+$("newBtn").onclick=()=>
+openAgendaForm(
+today(),
+null
+);
+
+
+$("dayNew").onclick=()=>
+openAgendaForm(
+selected,
+null
+);
+
+
+
+/* =====================================================
    EXPORTAR AGENDA
-================================================== */
+===================================================== */
 
 $("exportAgenda").onclick=()=>{
 
@@ -2524,27 +2500,25 @@ null,
 2
 )
 ],
-{type:"application/json"}
+{
+type:"application/json"
+}
 );
 
 
 let a=document.createElement("a");
 
-
 a.href=
 URL.createObjectURL(b);
 
-
 a.download=
 "mi_agenda_"+today()+".json";
-
 
 a.click();
 
 
 setTimeout(
-()=>
-URL.revokeObjectURL(a.href),
+()=>URL.revokeObjectURL(a.href),
 1000
 );
 
@@ -2552,9 +2526,9 @@ URL.revokeObjectURL(a.href),
 
 
 
-/* ==================================================
+/* =====================================================
    IMPORTAR AGENDA
-================================================== */
+===================================================== */
 
 $("importAgendaBtn").onclick=()=>{
 
@@ -2562,20 +2536,19 @@ if(
 !events.length||
 confirm(
 "⚠️ IMPORTAR AGENDA\n\n"+
-"La importación sustituirá los datos actuales "+
-"de Mi Agenda.\n\n"+
+"La importación sustituirá los datos actuales de Mi Agenda.\n\n"+
 "¿Quieres continuar?"
 )
 ){
 
-$("fileAgenda").click();
+$("agendaFile").click();
 
 }
 
 };
 
 
-$("fileAgenda").onchange=e=>{
+$("agendaFile").onchange=e=>{
 
 let f=e.target.files[0];
 
@@ -2598,7 +2571,6 @@ throw 0;
 
 events=d.events;
 
-
 saveAgenda();
 
 
@@ -2608,7 +2580,9 @@ view=new Date();
 
 
 renderToday();
+
 renderNext();
+
 renderCalendar();
 
 
@@ -2619,12 +2593,14 @@ alert(
 
 }catch(x){
 
-alert("Archivo no válido.");
+alert(
+"Archivo no válido."
+);
 
 }
 
 
-$("fileAgenda").value="";
+$("agendaFile").value="";
 
 };
 
@@ -2635,26 +2611,27 @@ r.readAsText(f);
 
 
 
-/* ==================================================
+/* =====================================================
    EXPORTAR ARCHIVO
-================================================== */
+===================================================== */
 
 $("exportArchivo").onclick=()=>{
 
-const blob=
-new Blob(
+const blob=new Blob(
 
 [
+
 JSON.stringify(
 
 {
+
 version:1,
 
 categories:
-data.categories,
+archivoData.categories,
 
 records:
-data.records
+archivoData.records
 
 },
 
@@ -2673,8 +2650,7 @@ type:"application/json"
 );
 
 
-const a=
-document.createElement("a");
+const a=document.createElement("a");
 
 
 a.href=
@@ -2682,13 +2658,7 @@ URL.createObjectURL(blob);
 
 
 a.download=
-"mi_archivo_"+
-
-new Date()
-.toISOString()
-.slice(0,10)+
-
-".json";
+"mi_archivo_"+today()+".json";
 
 
 a.click();
@@ -2704,45 +2674,41 @@ URL.revokeObjectURL(a.href),
 
 
 
-/* ==================================================
+/* =====================================================
    IMPORTAR ARCHIVO
-================================================== */
+===================================================== */
 
 $("importArchivoBtn").onclick=()=>{
 
 if(
 
-!data.records.length||
+!archivoData.records.length||
 
 confirm(
 
 "⚠️ IMPORTAR ARCHIVO\n\n"+
-"La importación sustituirá los datos actuales "+
-"de Mi Archivo.\n\n"+
+"La importación sustituirá los datos actuales de Mi Archivo.\n\n"+
 "¿Quieres continuar?"
 
 )
 
 ){
 
-$("fileArchivo").click();
+$("archivoFile").click();
 
 }
 
 };
 
 
-$("fileArchivo").onchange=e=>{
+$("archivoFile").onchange=e=>{
 
-const f=
-e.target.files[0];
-
+const f=e.target.files[0];
 
 if(!f)return;
 
 
-const r=
-new FileReader();
+const r=new FileReader();
 
 
 r.onload=()=>{
@@ -2760,13 +2726,11 @@ if(
 throw 0;
 
 
-data={
+archivoData={
 
-categories:
-d.categories,
+categories:d.categories,
 
-records:
-d.records
+records:d.records
 
 };
 
@@ -2774,11 +2738,7 @@ d.records
 saveArchivo();
 
 
-currentCategory=null;
-
-renderCategories();
-
-showTab("archivo");
+archivoInicio();
 
 
 alert(
@@ -2795,7 +2755,7 @@ alert(
 }
 
 
-$("fileArchivo").value="";
+$("archivoFile").value="";
 
 };
 
@@ -2806,27 +2766,11 @@ r.readAsText(f);
 
 
 
-/* ==================================================
+/* =====================================================
    ARRANQUE
-================================================== */
-
-/*
    IMPORTANTE:
-   La aplicación arranca siempre en MI AGENDA.
-*/
-
-showTab("hoy");
-
-renderToday();
-
-renderNext();
-
-renderCalendar();
-
-renderCategories();
-
-updateNotificationStatus();
-
+   LA WEB ABRE DIRECTAMENTE EN HOY
+===================================================== */
 
 setInterval(
 checkAlerts,
@@ -2835,6 +2779,18 @@ checkAlerts,
 
 
 checkAlerts();
+
+
+// Pantalla inicial: HOY
+showTab("hoy");
+
+renderToday();
+
+renderNext();
+
+renderCalendar();
+
+updateNotificationStatus();
 
 </script>
 
