@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>Mi Archivo v1.0</title>
+
+<meta name="theme-color" content="#121212">
+
+<style>
+
+:root{
+--bg:#121212;
+--card:#1e1e1e;
+--item:#252525;
+--inp:#2a2a2a;
+--a:#00e676;
+--txt:#fff;
+--sub:#aaa;
+--bor:#333;
+--red:#ff5252;
+--blue:#29b6f6;
+--yel:#ffd740;
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+background:var(--bg);
+color:var(--txt);
+padding-bottom:75px;
+}
+
+header{
+background:var(--card);
+padding:13px;
+text-align:center;
+border-bottom:1px solid var(--bor);
+}
+
+h1{
+font-size:1.2rem;
+color:var(--a);
+}
+
+h2{
+font-size:1rem;
+color:var(--a);
+margin-bottom:10px;
+}
+
+.container{
+max-width:650px;
+margin:auto;
+padding:10px;
+}
+
+nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:var(--card);
+display:flex;
+border-top:1px solid var(--bor);
+padding:7px 0;
+z-index:20;
+}
+
+nav button{
+width:25%;
+background:none;
+border:0;
+color:var(--sub);
+font-size:.72rem;
+padding:4px;
+}
+
+nav button.active{
+color:var(--a);
+font-weight:bold;
+}
+
+.tab{
+display:none;
+}
+
+.tab.active{
+display:block;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--bor);
+border-radius:11px;
+padding:12px;
+margin-bottom:10px;
+}
+
+.btn{
+background:var(--a);
+color:#000;
+border:0;
+border-radius:7px;
+padding:11px;
+width:100%;
+font-weight:bold;
+cursor:pointer;
+min-height:42px;
+}
+
+.out{
+background:transparent;
+color:#fff;
+border:1px solid var(--bor);
+}
+
+.sm{
+width:auto;
+padding:8px 13px;
+font-size:.8rem;
+min-height:38px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+background:var(--inp);
+color:#fff;
+border:1px solid var(--bor);
+border-radius:6px;
+padding:11px;
+margin:5px 0 10px;
+font-size:.95rem;
+}
+
+textarea{
+min-height:90px;
+}
+
+label{
+font-size:.75rem;
+color:var(--sub);
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+}
+
+.category{
+background:var(--item);
+border:1px solid var(--bor);
+border-radius:10px;
+padding:15px 10px;
+text-align:center;
+cursor:pointer;
+min-height:95px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.category .ico{
+font-size:1.7rem;
+margin-bottom:7px;
+}
+
+.category .name{
+font-weight:bold;
+font-size:.85rem;
+}
+
+.record{
+background:var(--item);
+border-left:4px solid var(--a);
+border-radius:7px;
+padding:10px;
+margin-bottom:8px;
+}
+
+.rtitle{
+font-weight:bold;
+font-size:.9rem;
+}
+
+.rdata{
+font-size:.78rem;
+color:var(--sub);
+margin-top:5px;
+white-space:pre-wrap;
+line-height:1.4;
+}
+
+.actions{
+display:flex;
+gap:7px;
+margin-top:8px;
+}
+
+.actions button{
+background:#333;
+color:#fff;
+border:1px solid var(--bor);
+border-radius:6px;
+padding:8px 10px;
+font-size:.7rem;
+cursor:pointer;
+min-height:36px;
+}
+
+.empty{
+text-align:center;
+color:var(--sub);
+padding:18px;
+font-size:.8rem;
+}
+
+.toprow{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:8px;
+margin-bottom:10px;
+}
+
+.toprow h2{
+margin:0;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:#000c;
+z-index:50;
+padding:12px;
+overflow:auto;
+}
+
+.modalbox{
+max-width:600px;
+margin:20px auto;
+background:var(--card);
+border:1px solid var(--bor);
+border-radius:11px;
+padding:14px;
+}
+
+.modalbox h2{
+text-align:center;
+margin-bottom:14px;
+}
+
+.small{
+font-size:.72rem;
+color:var(--sub);
+line-height:1.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>📁 MI ARCHIVO v1.0</h1>
+</header>
+
+
+<div class="container">
+
+
+<!-- =========================
+     INICIO
+========================= -->
+
+<section id="inicio" class="tab active">
+
+<div class="card">
+
+<h2>📁 Mis datos</h2>
+
+<p class="small">
+Selecciona un apartado para consultar o añadir datos.
+</p>
+
+</div>
+
+
+<div class="grid" id="categories"></div>
+
+
+<div class="card" style="margin-top:10px">
+
+<button class="btn out" id="newCategoryBtn">
+＋ Nuevo apartado
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     LISTA
+========================= -->
+
+<section id="lista" class="tab">
+
+<div class="card">
+
+<div class="toprow">
+
+<h2 id="listTitle"></h2>
+
+<button class="btn out sm" id="backBtn">
+❮ Volver
+</button>
+
+</div>
+
+
+<div id="recordList"></div>
+
+
+<button class="btn" id="newRecordBtn">
+＋ Añadir dato
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     AJUSTES
+========================= -->
+
+<section id="ajustes" class="tab">
+
+<div class="card">
+
+<h2>⚙️ Ajustes</h2>
+
+
+<button class="btn out" id="exportBtn">
+💾 Exportar Archivo
+</button>
+
+<br><br>
+
+
+<button class="btn out" id="importBtn">
+📥 Importar Archivo
+</button>
+
+
+<input
+id="file"
+type="file"
+accept=".json"
+style="display:none"
+>
+
+</div>
+
+
+<div class="card">
+
+<h2>ℹ️ Mi Archivo v1.0</h2>
+
+<p class="small">
+Los datos se guardan automáticamente en este dispositivo.
+Esta versión guarda únicamente datos, no documentos.
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     INFO
+========================= -->
+
+<section id="info" class="tab">
+
+<div class="card">
+
+<h2>ℹ️ Estructura</h2>
+
+<p class="small">
+
+Los apartados iniciales son:
+
+<br><br>
+
+🚗 Coche<br>
+🏠 Casa<br>
+📱 Telefonía<br>
+🛡️ Seguros<br>
+🏖️ Vacaciones
+
+<br><br>
+
+Puedes crear nuevos apartados y añadir,
+modificar o borrar datos.
+
+</p>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- =========================
+     NAVEGACION
+========================= -->
+
+<nav>
+
+<button id="navInicio" class="active">
+📁<br>Archivo
+</button>
+
+<button id="navLista">
+📋<br>Datos
+</button>
+
+<button id="navAjustes">
+⚙️<br>Ajustes
+</button>
+
+<button id="navInfo">
+ℹ️<br>Info
+</button>
+
+</nav>
+
+
+
+<script>
+
+"use strict";
+
+
+/* =========================
+   DATOS
+========================= */
+
+const KEY="mi_archivo_v1";
+
+
+const DEFAULT_CATEGORIES=[
+
+{
+id:"coche",
+name:"Coche",
+icon:"🚗"
+},
+
+{
+id:"casa",
+name:"Casa",
+icon:"🏠"
+},
+
+{
+id:"telefonia",
+name:"Telefonía",
+icon:"📱"
+},
+
+{
+id:"seguros",
+name:"Seguros",
+icon:"🛡️"
+},
+
+{
+id:"vacaciones",
+name:"Vacaciones",
+icon:"🏖️"
+}
+
+];
+
+
+let data;
+
+
+try{
+
+data=JSON.parse(
+localStorage.getItem(KEY)||"null"
+);
+
+}catch(e){
+
+data=null;
+
+}
+
+
+if(
+!data ||
+!Array.isArray(data.categories) ||
+!Array.isArray(data.records)
+){
+
+data={
+
+categories:
+DEFAULT_CATEGORIES.map(x=>({...x})),
+
+records:[]
+
+};
+
+save();
+
+}
+
+
+let currentCategory=null;
+
+let editId=null;
+
+
+
+/* =========================
+   FUNCIONES BASICAS
+========================= */
+
+const $=id=>
+document.getElementById(id);
+
+
+function save(){
+
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
+
+}
+
+
+function esc(s){
+
+return String(s??"").replace(
+/[&<>"']/g,
+
+m=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[m])
+
+);
+
+}
+
+
+
+/* =========================
+   NAVEGACION
+========================= */
+
+function showTab(n){
+
+[
+"inicio",
+"lista",
+"ajustes",
+"info"
+
+].forEach(x=>
+
+$(x).classList.toggle(
+"active",
+x===n
+)
+
+);
+
+
+[
+"navInicio",
+"navLista",
+"navAjustes",
+"navInfo"
+
+].forEach((x,i)=>
+
+$(x).classList.toggle(
+"active",
+
+[
+"inicio",
+"lista",
+"ajustes",
+"info"
+][i]===n
+
+)
+
+);
+
+}
+
+
+$("navInicio").onclick=()=>{
+
+currentCategory=null;
+
+renderCategories();
+
+showTab("inicio");
+
+};
+
+
+$("navLista").onclick=()=>{
+
+if(currentCategory){
+
+renderRecords();
+
+showTab("lista");
+
+}else{
+
+renderCategories();
+
+showTab("inicio");
+
+}
+
+};
+
+
+$("navAjustes").onclick=()=>
+showTab("ajustes");
+
+
+$("navInfo").onclick=()=>
+showTab("info");
+
+
+
+/* =========================
+   CATEGORIAS
+========================= */
+
+function renderCategories(){
+
+$("categories").innerHTML=
+
+data.categories.map(c=>`
+
+<div
+class="category"
+data-cat="${esc(c.id)}"
+>
+
+<div class="ico">
+${esc(c.icon)}
+</div>
+
+<div class="name">
+${esc(c.name)}
+</div>
+
+</div>
+
+`).join("");
+
+
+document
+.querySelectorAll(".category")
+.forEach(el=>{
+
+el.onclick=()=>{
+
+currentCategory=
+el.dataset.cat;
+
+renderRecords();
+
+showTab("lista");
+
+};
+
+});
+
+}
+
+
+
+/* =========================
+   BUSCAR CATEGORIA
+========================= */
+
+function categoryById(id){
+
+return data.categories.find(
+c=>c.id===id
+);
+
+}
+
+
+
+/* =========================
+   MOSTRAR DATOS
+========================= */
+
+function renderRecords(){
+
+const c=
+categoryById(currentCategory);
+
+
+if(!c){
+
+showTab("inicio");
+
+return;
+
+}
+
+
+$("listTitle").textContent=
+(c.icon||"📁")+" "+c.name;
+
+
+const list=
+
+data.records
+.filter(r=>
+r.category===currentCategory
+)
+.sort((a,b)=>
+String(a.title)
+.localeCompare(
+String(b.title),
+"es"
+)
+);
+
+
+$("recordList").innerHTML=
+
+list.length?
+
+list.map(r=>`
+
+<div class="record">
+
+<div class="rtitle">
+${esc(r.title)}
+</div>
+
+${r.details?
+
+`<div class="rdata">
+${esc(r.details)}
+</div>`
+
+:""}
+
+<div class="actions">
+
+<button
+class="editBtn"
+data-id="${esc(r.id)}"
+>
+✏️ Editar
+</button>
+
+<button
+class="deleteBtn"
+data-id="${esc(r.id)}"
+>
+🗑️ Borrar
+</button>
+
+</div>
+
+</div>
+
+`).join("")
+
+:
+
+`<div class="empty">
+No hay datos en este apartado.
+</div>`;
+
+}
+
+
+
+/* =========================
+   VOLVER
+========================= */
+
+$("backBtn").onclick=()=>{
+
+currentCategory=null;
+
+renderCategories();
+
+showTab("inicio");
+
+};
+
+
+
+/* =========================
+   NUEVO DATO
+========================= */
+
+$("newRecordBtn").onclick=()=>{
+
+if(currentCategory){
+
+openRecordForm(
+currentCategory,
+null
+);
+
+}
+
+};
+
+
+
+/* =========================
+   EDITAR / BORRAR
+========================= */
+
+document.addEventListener(
+"click",
+e=>{
+
+const b=
+e.target.closest(
+".editBtn,.deleteBtn"
+);
+
+if(!b)return;
+
+
+const id=b.dataset.id;
+
+
+const r=
+data.records.find(
+x=>String(x.id)===String(id)
+);
+
+
+if(!r)return;
+
+
+if(
+b.classList.contains("editBtn")
+){
+
+openRecordForm(
+r.category,
+r
+);
+
+}
+
+
+else if(
+confirm("¿Borrar este dato?")
+){
+
+data.records=
+data.records.filter(
+x=>String(x.id)!==String(id)
+);
+
+save();
+
+renderRecords();
+
+}
+
+});
+
+
+
+/* =========================
+   FORMULARIO DATO
+========================= */
+
+function openRecordForm(
+categoryId,
+r
+){
+
+editId=
+r?
+r.id:
+null;
+
+
+const m=
+document.createElement("div");
+
+
+m.className="modal";
+
+
+m.innerHTML=
+
+`
+
+<div class="modalbox">
+
+<h2>
+
+${
+editId?
+"✏️ Editar dato":
+"➕ Nuevo dato"
+}
+
+</h2>
+
+
+<label>
+Nombre / concepto
+</label>
+
+<input
+id="rt"
+placeholder="Ej.: ITV, seguro, recibo..."
+value="${esc(r?.title||"")}"
+>
+
+
+<label>
+Datos
+</label>
+
+<textarea
+id="rd"
+placeholder="Escribe aquí los datos que quieras guardar..."
+>${esc(r?.details||"")}</textarea>
+
+
+<div
+style="display:flex;gap:7px"
+>
+
+<button
+class="btn"
+id="rs"
+>
+Guardar
+</button>
+
+
+<button
+class="btn out"
+id="rc"
+>
+Cancelar
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+document.body.appendChild(m);
+
+
+$("rc").onclick=()=>
+m.remove();
+
+
+$("rs").onclick=()=>{
+
+const title=
+$("rt").value.trim();
+
+
+if(!title){
+
+alert(
+"Escribe un nombre o concepto."
+);
+
+$("rt").focus();
+
+return;
+
+}
+
+
+const x={
+
+id:
+editId||
+Date.now(),
+
+category:
+categoryId,
+
+title:
+title,
+
+details:
+$("rd").value.trim()
+
+};
+
+
+if(editId){
+
+data.records=
+data.records.map(a=>
+
+String(a.id)===
+String(editId)?
+
+x:
+a
+
+);
+
+}
+
+else{
+
+data.records.push(x);
+
+}
+
+
+save();
+
+m.remove();
+
+renderRecords();
+
+};
+
+}
+
+
+
+/* =========================
+   NUEVO APARTADO
+========================= */
+
+$("newCategoryBtn").onclick=()=>{
+
+const m=
+document.createElement("div");
+
+
+m.className="modal";
+
+
+m.innerHTML=
+
+`
+
+<div class="modalbox">
+
+<h2>
+➕ Nuevo apartado
+</h2>
+
+
+<label>
+Nombre
+</label>
+
+<input
+id="cn"
+placeholder="Ej.: Mascotas, Ocio, Trámites..."
+>
+
+
+<label>
+Icono
+</label>
+
+<input
+id="ci"
+placeholder="📁"
+value="📁"
+>
+
+
+<div
+style="display:flex;gap:7px"
+>
+
+<button
+class="btn"
+id="cs"
+>
+Guardar
+</button>
+
+
+<button
+class="btn out"
+id="cc"
+>
+Cancelar
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+document.body.appendChild(m);
+
+
+$("cc").onclick=()=>
+m.remove();
+
+
+$("cs").onclick=()=>{
+
+const name=
+$("cn").value.trim();
+
+
+const icon=
+$("ci").value.trim()||
+"📁";
+
+
+if(!name){
+
+alert(
+"Escribe el nombre del apartado."
+);
+
+$("cn").focus();
+
+return;
+
+}
+
+
+data.categories.push({
+
+id:
+"cat_"+Date.now(),
+
+name:
+name,
+
+icon:
+icon
+
+});
+
+
+save();
+
+m.remove();
+
+renderCategories();
+
+};
+
+};
+
+
+
+/* =========================
+   EXPORTAR
+========================= */
+
+$("exportBtn").onclick=()=>{
+
+const blob=
+new Blob(
+
+[
+
+JSON.stringify(
+
+{
+
+version:1,
+
+categories:
+data.categories,
+
+records:
+data.records
+
+},
+
+null,
+
+2
+
+)
+
+],
+
+{
+type:"application/json"
+}
+
+);
+
+
+const a=
+document.createElement("a");
+
+
+a.href=
+URL.createObjectURL(blob);
+
+
+a.download=
+"mi_archivo_"+
+new Date()
+.toISOString()
+.slice(0,10)+
+".json";
+
+
+a.click();
+
+
+setTimeout(
+
+()=>
+URL.revokeObjectURL(a.href),
+
+1000
+
+);
+
+};
+
+
+
+/* =========================
+   IMPORTAR
+========================= */
+
+$("importBtn").onclick=()=>{
+
+if(
+
+!data.records.length||
+
+confirm(
+
+"⚠️ IMPORTAR ARCHIVO\n\n"+
+"La importación sustituirá los datos actuales "+
+"de Mi Archivo.\n\n"+
+"¿Quieres continuar?"
+
+)
+
+){
+
+$("file").click();
+
+}
+
+};
+
+
+
+$("file").onchange=e=>{
+
+const f=
+e.target.files[0];
+
+
+if(!f)return;
+
+
+const r=
+new FileReader();
+
+
+r.onload=()=>{
+
+try{
+
+const d=
+JSON.parse(r.result);
+
+
+if(
+!Array.isArray(d.categories)||
+!Array.isArray(d.records)
+)
+throw 0;
+
+
+data={
+
+categories:
+d.categories,
+
+records:
+d.records
+
+};
+
+
+save();
+
+
+currentCategory=null;
+
+renderCategories();
+
+showTab("inicio");
+
+
+alert(
+"Archivo importado correctamente."
+);
+
+
+}catch(x){
+
+alert(
+"Archivo no válido."
+);
+
+}
+
+
+$("file").value="";
+
+};
+
+
+r.readAsText(f);
+
+};
+
+
+
+/* =========================
+   ARRANQUE
+========================= */
+
+renderCategories();
+
+</script>
+
+</body>
+</html>
